@@ -8,10 +8,15 @@ import {uStyles, colors} from '../styles.js'
 import {ImageUpload} from '../scripts/ImageUpload'
 import PostCard from "../components/PostCard"
 import CameraModal from '../components/CameraModal.js';
+import {AI} from '../scripts/AI'
 
 export default PostScreen = () => {
     const [post, setPost] = useState({id: "", username: "", uid: "", imageUrl: "", link: "", caption: "", type: "", cause: "", likes: 0, profileVisits: 0, shares: 0, comments: []});
     const [camVisible, setCamVisible] = useState(false);
+
+    useEffect(() => {
+        AI.analyzeSentiment("I hate verything");
+    }, []);
 
     const sendPost = async () => {
         if (post.imageUrl.length > 0 && post.cause.length > 0) {
