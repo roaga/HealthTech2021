@@ -10,6 +10,7 @@ import {ImageUpload} from '../scripts/ImageUpload'
 import OnboardingModal from '../components/OnboardingModal.js';
 import NotificationsModal from '../components/NotificationsModal'
 import SettingsModal from '../components/SettingsModal.js';
+import {getQuote} from '../scripts/quoteGetter'
 console.disableYellowBox = true;
 
 export default ProfileScreen = () => {
@@ -20,10 +21,16 @@ export default ProfileScreen = () => {
     const [settingsVisible, setSettingsVisiible] = useState(false);
     const [notificationsVisible, setNotificationsVisible] = useState(false);
     const [unreadNotifications, setUnreadNotifications] = useState(false);
+    const [motQuote, setQuote] = useState("");
 
     useEffect(() => {
         //get user data, posts, and set it with state
-        
+        const quote = async () => {
+            await getQuote.giveQuote().then(res => {
+                setQuote(res);
+            });
+        }
+        quote();
     }, []);
 
     // const tempData = [
@@ -58,7 +65,7 @@ export default ProfileScreen = () => {
 
     return (
         <View style={styles.container}>
-            <View style={{marginTop: 64, marginTop: "50%"}}>
+            <ScrollView style={{marginTop: 64, marginTop: "40%"}}>
                 <TouchableOpacity style={[uStyles.pfpBubble, {alignSelf: "center"}]} onPress={() => addPostPhoto()}>
                     <ImageBackground 
                         style={uStyles.pfp}
@@ -70,6 +77,10 @@ export default ProfileScreen = () => {
                     />
                 </TouchableOpacity>
                 <Text style={[uStyles.header, {marginTop: 16}]}>{user.username}</Text>
+
+                <Text style={[uStyles.title, {padding: 32, marginTop: 32}]}>...</Text>
+
+                <Text style={[uStyles.title, {padding: 32, marginTop: 32}]}>{motQuote}</Text>
 
                 {/* <View style={{alignItems: "center", marginTop: 16, flexDirection: "row", justifyContent: "space-between"}}>
                     <View style={{flex: 1, alignItems: "center"}}>
@@ -99,7 +110,7 @@ export default ProfileScreen = () => {
                         maxToRenderPerBatch={1} // Reduce number in each render batch
                     />
                 </View> */}
-            </View>
+            </ScrollView>
 
             <Modal
                 animationType="slide" 
