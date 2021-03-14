@@ -9,9 +9,6 @@ import {FirebaseContext} from "../context/FirebaseContext"
 export default SentimentModal = (props) => {
     const [input, setInput] = useState("");
     const firebase = useContext(FirebaseContext);
-    useEffect(() => {
-
-    }, []);
 
     return (
         <View style={uStyles.modal}>

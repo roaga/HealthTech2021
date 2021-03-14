@@ -84,6 +84,16 @@ const Firebase = {
             sentiment: firebase.firestore.FieldValue.arrayUnion(value)
         });
     },
+    getSuggestion: async () => {
+        let sentiment = await Firebase.getUserInfo(Firebase.getCurrentUser().uid);
+        sentiment = sentiment["sentiment"].slice(Math.max(sentiment["sentiment"].length - 5, 0)); // get last 5 sentiments
+        let sentimentSum = sentiment.reduce((a, b) => a + b, 0);
+        if (sentimentSum < 0) {
+            return "Try changing up your workout, because we think something's not working for you.\nExperiment with the type, frequency, and intensity of exercise."
+        } else {
+            return "Keep at it! You've been doing great!"
+        }
+    },
 
     // auth functions
     getCurrentUser: () => {

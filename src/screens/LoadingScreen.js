@@ -32,7 +32,7 @@ export default LoadingScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={uStyles.title}>SCA</Text>
+            <Text style={uStyles.title}>FitFeelsGood</Text>
 
             <LottieView source={require("../../assets/51-preloader.json")} autoPlay loop style={{width: "100%"}}/>
         </View>
