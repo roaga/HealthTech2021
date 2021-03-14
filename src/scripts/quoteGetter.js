@@ -14,8 +14,7 @@ const db = firebase.firestore();
 const functions = firebase.functions();
 
 const getQuote = {
-    postToDB: async (text) => {
-        console.log('grabbing a quote')
+    giveQuote: async (text) => {
         const motivationalQuotes = []
         await db.collection("motivationalQuotes").get()
             .then(querySnapshot => {
@@ -23,10 +22,12 @@ const getQuote = {
                 motivationalQuotes.push(doc.data());
           });
         });
-
-        return
- 
-    }
+        //console.log(motivationalQuotes)
+        var randomNumber = Math.floor(Math.random() * motivationalQuotes.length) + 1;
+        console.log(motivationalQuotes[randomNumber].quote)
+    }   
 }
 
+//var randomNumber = Math.floor(Math.random() * motivationalQuotes.length) + 1;
+//console.log(motivationalQuotes[1])
 export {getQuote}

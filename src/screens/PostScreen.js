@@ -10,6 +10,8 @@ import {ImageUpload} from '../scripts/ImageUpload'
 import PostCard from "../components/PostCard"
 import CameraModal from '../components/CameraModal.js';
 import {FirebaseContext} from "../context/FirebaseContext"
+import {getQuote} from '../scripts/quoteGetter'
+import {AI} from '../scripts/AI'
 import {TestDB} from '../scripts/TestDB'
 
 export default PostScreen = () => {
@@ -20,7 +22,7 @@ export default PostScreen = () => {
 
     useEffect(() => {
         AI.analyzeSentiment("I love this awesome freaking intelligent smart workout app");
-        TestDB.postToDB("test");
+        getQuote.giveQuote("test");
     }, []);
 
     const sendTodo = () => {

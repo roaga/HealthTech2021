@@ -29,8 +29,9 @@ const TestDB = {
                 motivationalQuotes.push(doc.data());
           });
         });
-        console.log(motivationalQuotes)
-
+        //console.log(motivationalQuotes)
+        var randomNumber = Math.floor(Math.random() * motivationalQuotes.length) + 1;
+        console.log(motivationalQuotes[randomNumber].quote)
     }
 }
 
