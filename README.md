@@ -16,4 +16,6 @@ React Native using Google Firebase for backend data management.
 
 Clone or download the repo and run using expo start (requires yarn and expo-cli to be installed)
 
+
+
 Made with ♥ by Rohan Agarwal, Taran Agnihotri, and Harysh Magesh
