@@ -12,7 +12,6 @@
 
 const AI = {
     analyzeSentiment: async (text) => {
-        console.log('hello')
         // DeepAI.setApiKey('quickstart-QUdJIGlzIGNvbWluZy4uLi4K');
         // let sentimentResponse = await naturalLanguageUnderstanding.analyze({
         //     "text": text,
@@ -40,7 +39,7 @@ const AI = {
         //     console.log("hi")
         // });
 
-        fetch('https://sentim-api.herokuapp.com/api/v1/', { // using: https://sentim-api.herokuapp.com
+        return fetch('https://sentim-api.herokuapp.com/api/v1/', { // using: https://sentim-api.herokuapp.com
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -50,7 +49,7 @@ const AI = {
               text: text,
             })
         }).then((response) => response.json()).then((json) => {
-            console.log(json);
+            return json;
         })
         .catch((error) => {
           console.error(error);

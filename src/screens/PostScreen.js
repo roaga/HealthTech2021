@@ -9,7 +9,6 @@ import {uStyles, colors} from '../styles.js'
 import {ImageUpload} from '../scripts/ImageUpload'
 import PostCard from "../components/PostCard"
 import CameraModal from '../components/CameraModal.js';
-import {AI} from '../scripts/AI'
 import {FirebaseContext} from "../context/FirebaseContext"
 
 export default PostScreen = () => {
@@ -17,10 +16,6 @@ export default PostScreen = () => {
     const [goal, setGoal] = useState({id: "", uid: "", goal: "", day: "", completed: false});
     const [todoOverGoal, setTodoOverGoal] = useState(true);
     const firebase = useContext(FirebaseContext);
-
-    useEffect(() => {
-        AI.analyzeSentiment("I love this awesome freaking intelligent smart workout app");
-    }, []);
 
     const sendTodo = () => {
         // todo: call backend
