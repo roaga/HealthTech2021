@@ -81,7 +81,7 @@ export default FeedScreen = () => {
 
     const renderGoal = (item, index) => {
         return (
-            <View style={{flexDirection: "row"}}>
+            <View style={{flexDirection: "row", marginBottom: 8, marginRight: 12}}>
                 <TouchableOpacity onPress={() => {
                     toggleGoalComplete(index); 
                 }}>
