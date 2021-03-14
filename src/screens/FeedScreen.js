@@ -11,7 +11,7 @@ import SentimentModal from '../components/SentimentModal.js';
 
 export default FeedScreen = () => {
     const firebase = useContext(FirebaseContext);
-    const [upNext, setUpNext] = useState([{id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: "", completed: false}]);
+    const [upNext, setUpNext] = useState([]);
     const [goals, setGoals] = useState([]);
     const [onboardingVisible, setOnboardingVisible] = useState(false);    
     const [sentimentModalVisible, setSentimentModalVisible] = useState(false);
@@ -19,15 +19,11 @@ export default FeedScreen = () => {
     useEffect(() => {
         const getTodosGoals = async () => {
             await firebase.getTodos().then(res => {
-                setUpNext(res);
+                setUpNext(res.filter(item => !item.data.completed));
             });
             await firebase.getGoals().then((res) => {
-                console.log("res:")
-                console.log(res)
-                setGoals(res);
+                setGoals(res.filter(item => !item.data.completed));
             });
-            let gottenGoals = await firebase.getGoals();
-            console.log(gottenGoals)
         }
         getTodosGoals();
 
@@ -43,21 +39,27 @@ export default FeedScreen = () => {
     }
 
 
-    const toggleComplete = (index) => {
-        // todo toggle complete on backend
-
-        // togle complete on state
+    const toggleTodoComplete = (index) => {
         let newUpNext = [...upNext];
-        console.log('hi')
-        console.log(newUpNext)
-        console.log(newUpNext[index].completed)
-        newUpNext[index].completed = !newUpNext[index].completed;
-        console.log(newUpNext)
+        newUpNext[index].data.completed = !newUpNext[index].data.completed;
         setUpNext(newUpNext);
-        if (newUpNext[index].completed) {
+        if (newUpNext[index].data.completed) {
             toggleSentimentModal();
         }
 
+        //update backend
+        firebase.editGoal(newUpNext[index]);
+    }
+    const toggleGoalComplete = (index) => {
+        let newGoals = [...goals];
+        newGoals[index].data.completed = !newGoals[index].data.completed;
+        setGoals(newGoals);
+        // if (newGoals[index].completed) {
+        //     toggleSentimentModal();
+        // }
+
+        //update backend
+        firebase.editGoal(newGoals[index]);
     }
 
     const toggleSentimentModal = () => {
@@ -68,9 +70,9 @@ export default FeedScreen = () => {
         return (
             <View style={{flexDirection: "row"}}>
                 <TouchableOpacity onPress={() => {
-                    toggleComplete(index); 
+                    toggleTodoComplete(index); 
                 }}>
-                    <Feather name={item.completed ? "check-circle" : "circle"} color={colors.dark} size={32}/>
+                    <Feather name={item.data.completed ? "check-circle" : "circle"} color={colors.dark} size={32}/>
                 </TouchableOpacity>
                 <Text style={[uStyles.body, {color: colors.black, paddingHorizontal: 16}]}>{"I will do " + item.quantity + " of " + item.exercise + " on " + item.day + " at " + item.time + " in " + item.place + "."}</Text>
             </View>
@@ -80,7 +82,11 @@ export default FeedScreen = () => {
     const renderGoal = (item, index) => {
         return (
             <View style={{flexDirection: "row"}}>
-                <Feather name={item.completed ? "check-circle" : "circle"} color={colors.dark} size={32}/>
+                <TouchableOpacity onPress={() => {
+                    toggleGoalComplete(index); 
+                }}>
+                    <Feather name={item.data.completed ? "check-circle" : "circle"} color={colors.dark} size={32}/>
+                </TouchableOpacity>
                 <Text style={[uStyles.body, {color: colors.black, paddingHorizontal: 16}]}>{"I will be able to " + item.goal + " by " + item.day + "."}</Text>
             </View>
         )
@@ -96,7 +102,7 @@ export default FeedScreen = () => {
                     <FlatList
                         data={upNext}
                         renderItem={({item, index}) => renderTodo(item, index)}
-                        keyExtractor={(item) => item.uid.toString() + item.day.toString() + item.quantity.toString() + item.exercise.toString()}
+                        keyExtractor={(item) => item.id}
                         style={{flex: 1, height: "100%", paddingTop: 12}}
                         contentContainerStyle={{paddingBottom: 12}}
                         showsVerticalScrollIndicator={false}
@@ -112,7 +118,7 @@ export default FeedScreen = () => {
                     <FlatList
                         data={goals}
                         renderItem={({item, index}) => renderGoal(item, index)}
-                        keyExtractor={(item) => item.uid.toString() + item.goal.toString() + item.day.toString()}
+                        keyExtractor={(item) => item.id}
                         style={{flex: 1, height: "100%", paddingTop: 12}}
                         contentContainerStyle={{paddingBottom: 12}}
                         showsVerticalScrollIndicator={false}

@@ -16,8 +16,8 @@ import {TestDB} from '../scripts/TestDB'
 
 export default PostScreen = () => {
     const firebase = useContext(FirebaseContext);
-    const [todo, setTodo] = useState({uid: firebase.getCurrentUser().uid, quantity: "", exercise: "", day: "", time: "", place: "", completed: false});
-    const [goal, setGoal] = useState({uid: firebase.getCurrentUser().uid, goal: "", day: "", completed: false});
+    const [todo, setTodo] = useState({uid: firebase.getCurrentUser().uid, quantity: "", exercise: "", day: "", time: "", place: "", completed: false, created: Date.now()});
+    const [goal, setGoal] = useState({uid: firebase.getCurrentUser().uid, goal: "", day: "", completed: false, created: Date.now()});
     const [todoOverGoal, setTodoOverGoal] = useState(true);
 
     useEffect(() => {
@@ -26,12 +26,12 @@ export default PostScreen = () => {
 
     const sendTodo = () => {
         firebase.addTodo(todo);
-        setTodo({uid: firebase.getCurrentUser().uid, quantity: "", exercise: "", day: "", time: "", place: ""});
+        setTodo({uid: firebase.getCurrentUser().uid, quantity: "", exercise: "", day: "", time: "", place: "", created: Date.now()});
     }
 
     const sendGoal = () => {
         firebase.addGoal(goal);
-        setGoal({uid: firebase.getCurrentUser().uid, goal: "", day: "", completed: false});
+        setGoal({uid: firebase.getCurrentUser().uid, goal: "", day: "", completed: false, created: Date.now()});
     }
 
     const flip = () => {

@@ -26,14 +26,15 @@ const Firebase = {
             uid: goal.uid,
             goal: goal.goal,
             day: goal.day,
-            completed: goal.completed
+            completed: goal.completed,
+            created: goal.created
         });
     },
     getGoals: async () => {
         return await db.collection("goals").where("uid", "==", Firebase.getCurrentUser().uid).get().then((querySnapshot) => {
             let goals = [];
             querySnapshot.forEach((doc) => {
-                goals.push(doc.data());
+                goals.push({id: doc.id, data: doc.data()});
             });
             return goals;
         })
@@ -41,8 +42,8 @@ const Firebase = {
             console.log("Error getting documents: ", error);
         });
     },
-    editGoal: () => {
-
+    editGoal: async (goal) => {
+        await db.collection("goals").doc(goal.id).set(goal.data);
     },
     deleteGoal: () => {
 
@@ -55,14 +56,15 @@ const Firebase = {
             day: todo.day,
             time: todo.time,
             place: todo.place,
-            completed: todo.completed
+            completed: todo.completed,
+            created: todo.created
         })
     },
     getTodos: async () => {
         return await db.collection("intentions").where("uid", "==", Firebase.getCurrentUser().uid).get().then((querySnapshot) => {
             let todos = [];
             querySnapshot.forEach((doc) => {
-                todos.push(doc.data());
+                todos.push({id: doc.id, data: doc.data()});
             });
             return todos;
         })
@@ -71,8 +73,8 @@ const Firebase = {
             return [];
         });
     },
-    editTodo: () => {
-
+    editTodo: async (todo) => {
+        await db.collection("intentions").doc(todo.id).set(todo.data);
     },
     deleteTodo: () => {
 
