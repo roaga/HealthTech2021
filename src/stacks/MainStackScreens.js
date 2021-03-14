@@ -40,9 +40,9 @@ export default MainStackScreens = () => {
                     iconName = "home";
             }
 
-            if (route.name == "Post") {
-                return <Feather name={iconName} size={48} color={focused ? colors.primary : colors.white}/>;
-            }
+            // if (route.name == "Post") {
+            //     return <Feather name={iconName} size={48} color={focused ? colors.primary : colors.white}/>;
+            // }
             return <Feather name={iconName} size={24} color={focused ? colors.primary : colors.light} />;
         }
     }))
@@ -50,7 +50,7 @@ export default MainStackScreens = () => {
     return (
         <MainStack.Navigator tabBarOptions={tabBarOptions} screenOptions={screenOptions}>
             <MainStack.Screen name="Feed" component={FeedScreen}/>
-            <MainStack.Screen name="Explore" component={ExploreScreen}/>
+            {/* <MainStack.Screen name="Explore" component={ExploreScreen}/> */}
             <MainStack.Screen name="Post" component={PostScreen}/>
             <MainStack.Screen name="Game" component={GameScreen}/>
             <MainStack.Screen name="Profile" component={ProfileScreen}/>
