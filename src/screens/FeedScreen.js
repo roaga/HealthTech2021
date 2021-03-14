@@ -1,22 +1,18 @@
 import React, {useState, useCallback, useEffect, useRef, createRef} from 'react'
 import {View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, FlatList, Modal, ScrollView} from 'react-native'
 import {StatusBar} from 'expo-status-bar';
-import DropDownPicker from 'react-native-dropdown-picker';
 import {Feather} from "@expo/vector-icons";
-import ViewShot from "react-native-view-shot";
-import * as Sharing from 'expo-sharing';
 import * as Reanimatable from 'react-native-animatable';
 
 import {uStyles, colors} from '../styles.js'
-import PostCard from '../components/PostCard'
-import CommentsModal from '../components/CommentsModal.js';
 import checkIfFirstLaunch from '../scripts/CheckFirstLaunch';
-import ProfileModal from '../components/ProfileModal.js';
+import SentimentModal from '../components/SentimentModal.js';
 
 export default FeedScreen = () => {
-    const [upNext, setUpNext] = useState([]);
+    const [upNext, setUpNext] = useState([{id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: "", completed: false}]);
     const [goals, setGoals] = useState([]);
     const [onboardingVisible, setOnboardingVisible] = useState(false);    
+    const [sentimentModalVisible, setSentimentModalVisible] = useState(false);
 
     useEffect(() => {
         //TODO: get posts from backend, setLiked
@@ -44,6 +40,14 @@ export default FeedScreen = () => {
         newUpNext[index].completed = !newUpNext[index].completed;
         console.log(newUpNext)
         setUpNext(newUpNext);
+        if (newUpNext[index].completed) {
+            toggleSentimentModal();
+        }
+
+    }
+
+    const toggleSentimentModal = () => {
+        setSentimentModalVisible(!sentimentModalVisible);
     }
 
     const renderTodo = (item, index) => {
@@ -126,8 +130,8 @@ export default FeedScreen = () => {
 
             <View style={uStyles.topBar}>
                 <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>Stick to It!</Text>
-                <View style={{flexDirection: "row"}}>
-                    {/* <DropDownPicker
+                {/* <View style={{flexDirection: "row"}}>
+                    <DropDownPicker
                         items={[
                             {label: "For You", value: "foryou", icon: () => <Feather name="list" size={18} color={colors.primary}/>},
                             {label: "Fitness", value: "fitness", icon: () => <Feather name="activity" size={18} color={colors.primary}/>},
@@ -145,18 +149,18 @@ export default FeedScreen = () => {
                         searchable
                         searchablePlaceholder={"Search..."}
                         searchableStyle={{borderRadius: 20}}
-                    /> */}
-                </View>
+                    />
+                </View> */}
             </View>
 
-            {/* <Modal
+            <Modal
                 animationType="slide" 
-                visible={commentsModalVisible} 
-                onRequestClose={() => toggleComments()}
+                visible={sentimentModalVisible} 
+                onRequestClose={() => toggleSentimentModal()}
                 transparent={true}
             >
-                <CommentsModal comments={postIndex !== undefined ? tempData[postIndex].comments : []} close={() => toggleComments()}/>
-            </Modal> */}
+                <SentimentModal close={() => toggleSentimentModal()}/>
+            </Modal>
 
             {/* <Modal
                 animationType="slide" 
