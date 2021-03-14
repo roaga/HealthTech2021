@@ -15,7 +15,7 @@ export default PostScreen = () => {
     const [camVisible, setCamVisible] = useState(false);
 
     useEffect(() => {
-        AI.analyzeSentiment("I hate verything");
+        AI.analyzeSentiment("I love this awesome freaking intelligent smart workout app");
     }, []);
 
     const sendPost = async () => {
