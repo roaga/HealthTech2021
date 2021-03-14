@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/art": "^1.2.0",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.8",
@@ -33,6 +34,8 @@
     "react-native-dropdown-picker": "^4.0.2",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-onboarding-swiper": "^1.1.4",
+    "react-native-paper": "^4.7.2",
+    "react-native-progress": "^4.1.2",
     "react-native-screens": "^2.18.1",
     "react-native-svg": "^12.1.0",
     "react-native-svg-charts": "^5.4.0",
