@@ -54,7 +54,7 @@ export default GameScreen = () => {
                 <ScrollView style={{marginTop: 98}} contentContainerStyle={{paddingBottom: 96}}>
                     <Reanimatable.View animation="slideInUp" duration={500}>
                         <View style={[uStyles.searchCard, {height: 350}]}>
-                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8, fontSize: "30"}]}>Streak</Text>                   
+                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Streak</Text>                   
                             <Text style={[uStyles.body, {alignSelf: "center", color: colors.black, marginTop: 16}]}>You have a {tempPointsData.map(item => (item.Streak)).reduce((a, b) => a + b)} day streak!</Text>
                             <Text></Text>
                             <Text></Text>
@@ -63,7 +63,7 @@ export default GameScreen = () => {
                                 <Text style={[uStyles.body,{color: colors.black, position: "absolute", top: "50%", alignSelf: "center"}]}>50</Text>
                             </View>
                             <Text></Text>
-                            <Text style={{alignSelf: "center"}}>Streak Goal: 100 days</Text>
+                            <Text style={[uStyles.body, {alignSelf: "center", color: colors.black}]}>Streak Goal: 100 days</Text>
                             {/* <FlatList
                                 data={tempPointsData}
                                 renderItem={renderCauseItem}
@@ -103,7 +103,7 @@ export default GameScreen = () => {
                         </View>
                     </View> */}
                     <View style={[uStyles.searchCard, {height: 500}]}>
-                        <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8, fontSize: "30"}]}>History</Text>
+                        <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>History</Text>
                         <View style={styles.container2}>
                             <View style={styles.box}>
                                 <View style={styles.inner}>
