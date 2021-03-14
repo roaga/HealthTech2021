@@ -50,7 +50,7 @@ export default SignUpScreen = ({navigation}) => {
         <KeyboardAvoidingView behavior={"padding"} style={styles.container}>
             <ScrollView>
                 <Text style={uStyles.header}>
-                    {'Welcome to SCA.'}
+                    {'Welcome to HealthTech.'}
                 </Text>
 
                 <View style={{alignItems: "center"}}>
