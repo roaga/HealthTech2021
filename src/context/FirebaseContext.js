@@ -79,6 +79,11 @@ const Firebase = {
     deleteTodo: () => {
 
     },
+    addUserSentiment: async (value) => {
+        await db.collection("users").doc(Firebase.getCurrentUser().uid).update({
+            sentiment: firebase.firestore.FieldValue.arrayUnion(value)
+        });
+    },
 
     // auth functions
     getCurrentUser: () => {
@@ -95,7 +100,8 @@ const Firebase = {
             await db.collection("users").doc(uid).set({
                 username: user.name,
                 email: user.email,
-                profilePhotoUrl
+                profilePhotoUrl,
+                sentiment: []
             });
 
             if (user.profilePhoto) {

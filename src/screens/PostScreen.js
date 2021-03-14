@@ -19,9 +19,10 @@ export default PostScreen = () => {
     const [todo, setTodo] = useState({uid: firebase.getCurrentUser().uid, quantity: "", exercise: "", day: "", time: "", place: "", completed: false, created: Date.now()});
     const [goal, setGoal] = useState({uid: firebase.getCurrentUser().uid, goal: "", day: "", completed: false, created: Date.now()});
     const [todoOverGoal, setTodoOverGoal] = useState(true);
+    const [suggestion, setSuggestion] = useState();
 
     useEffect(() => {
-        
+        // get suggestion
     }, []);
 
     const sendTodo = () => {
@@ -43,13 +44,16 @@ export default PostScreen = () => {
             <KeyboardAvoidingView behavior={"padding"}>
                 <ScrollView style={{marginTop: 96, paddingBottom: 96, overflow: "hidden",}}>
                     <Reanimatable.View animation="slideInUp" duration={500}>
+                    <View>
+                        <Text style={[uStyles.header, {marginTop: 32}]}>A suggestion...</Text>
+                    </View>
                     <View style={[uStyles.postCard, {height: "70%"}]}>
                         <Text style={[uStyles.header, {color: colors.black, marginTop: 32}]}>{todoOverGoal ? "I will do" : "I will be able to"}</Text>
                         <TextInput 
                             style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
                             placeholder={todoOverGoal ? "enter a quantity..." : "enter a goal..."}
                             placeholderTextColor={colors.dark}
-                            autoCapitalize={false}
+                            autoCapitalize={"none"}
                             onChangeText={text => {
                                 if (todoOverGoal) {
                                     let newPost = {...todo};
@@ -70,7 +74,7 @@ export default PostScreen = () => {
                             style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
                             placeholder={"enter an exercise..."}
                             placeholderTextColor={colors.dark}
-                            autoCapitalize={false}
+                            autoCapitalize={"none"}
                             onChangeText={text => {
                                 if (todoOverGoal) {
                                     let newPost = {...todo};
@@ -93,7 +97,7 @@ export default PostScreen = () => {
                                 style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
                                 placeholder={"enter a day..."}
                                 placeholderTextColor={colors.dark}
-                                autoCapitalize={false}
+                                autoCapitalize={"none"}
                                 onChangeText={text => {
                                     let newPost = {...todo};
                                     newPost.day = text;
@@ -108,7 +112,7 @@ export default PostScreen = () => {
                                 style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
                                 placeholder={"enter a time..."}
                                 placeholderTextColor={colors.dark}
-                                autoCapitalize={false}
+                                autoCapitalize={"none"}
                                 onChangeText={text => {
                                     let newPost = {...todo};
                                     newPost.time = text;
@@ -123,7 +127,7 @@ export default PostScreen = () => {
                                 style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
                                 placeholder={"enter a place..."}
                                 placeholderTextColor={colors.dark}
-                                autoCapitalize={false}
+                                autoCapitalize={"none"}
                                 onChangeText={text => {
                                     let newPost = {...todo};
                                     newPost.place = text;

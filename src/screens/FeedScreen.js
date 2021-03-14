@@ -48,7 +48,7 @@ export default FeedScreen = () => {
         }
 
         //update backend
-        firebase.editGoal(newUpNext[index]);
+        firebase.editTodo(newUpNext[index]);
     }
     const toggleGoalComplete = (index) => {
         let newGoals = [...goals];
@@ -74,7 +74,7 @@ export default FeedScreen = () => {
                 }}>
                     <Feather name={item.data.completed ? "check-circle" : "circle"} color={colors.dark} size={32}/>
                 </TouchableOpacity>
-                <Text style={[uStyles.body, {color: colors.black, paddingHorizontal: 16}]}>{"I will do " + item.quantity + " of " + item.exercise + " on " + item.day + " at " + item.time + " in " + item.place + "."}</Text>
+                <Text style={[uStyles.body, {color: colors.black, paddingHorizontal: 16}]}>{"I will do " + item.data.quantity + " of " + item.data.exercise + " on " + item.data.day + " at " + item.data.time + " in " + item.data.place + "."}</Text>
             </View>
         )
     }
@@ -87,7 +87,7 @@ export default FeedScreen = () => {
                 }}>
                     <Feather name={item.data.completed ? "check-circle" : "circle"} color={colors.dark} size={32}/>
                 </TouchableOpacity>
-                <Text style={[uStyles.body, {color: colors.black, paddingHorizontal: 16}]}>{"I will be able to " + item.goal + " by " + item.day + "."}</Text>
+                <Text style={[uStyles.body, {color: colors.black, paddingHorizontal: 16}]}>{"I will be able to " + item.data.goal + " by " + item.data.day + "."}</Text>
             </View>
         )
     }
