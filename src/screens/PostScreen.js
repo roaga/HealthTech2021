@@ -18,14 +18,11 @@ export default PostScreen = () => {
     const [todoOverGoal, setTodoOverGoal] = useState(true);
     const firebase = useContext(FirebaseContext);
 
-<<<<<<< Updated upstream
-=======
     useEffect(() => {
         AI.analyzeSentiment("I love this awesome freaking intelligent smart workout app");
         TestDB.postToDB("test");
     }, []);
 
->>>>>>> Stashed changes
     const sendTodo = () => {
         // todo: call backend
         setTodo({id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: ""});
