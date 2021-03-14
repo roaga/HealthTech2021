@@ -79,14 +79,14 @@ export default GameScreen = () => {
                             />
                         </View>
                     </Reanimatable.View>
-                    <Reanimatable.View animation="slideInUp" duration={500}>
+                    {/* <Reanimatable.View animation="slideInUp" duration={500}>
                         <View style={[uStyles.searchCard, {height: 340}]} animation="slideInUp" duration={500}>
                             <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Up Next (Bullets incoming)</Text>
-                            <Text style={[uStyles.body, {alignSelf: "flex-start", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: "20"}]}> - You have to do 20 pushups today</Text>
-                            <Text style={[uStyles.body, {alignSelf: "flex-start", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: "20"}]}> - You have to do yoga for 10 mins</Text>
-                            <Text style={[uStyles.body, {alignSelf: "flex-start", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: "20"}]}> - You have to do 10 sit-ups</Text>
+                            <Text style={[uStyles.body, {alignSelf: "flex-start", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: 20}]}> - You have to do 20 pushups today</Text>
+                            <Text style={[uStyles.body, {alignSelf: "flex-start", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: 20}]}> - You have to do yoga for 10 mins</Text>
+                            <Text style={[uStyles.body, {alignSelf: "flex-start", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: 20}]}> - You have to do 10 sit-ups</Text>
                         </View>
-                    </Reanimatable.View>
+                    </Reanimatable.View> */}
                     
                     <View style={[uStyles.searchCard, {height: 754}]}>
                         <View>
@@ -121,7 +121,7 @@ export default GameScreen = () => {
             </View>
 
             <View style={uStyles.topBar}>
-                <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>Impact</Text>
+                <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>Your Progress</Text>
             </View>
 
             <StatusBar style="light" />

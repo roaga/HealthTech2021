@@ -15,6 +15,7 @@ import ProfileModal from '../components/ProfileModal.js';
 
 export default FeedScreen = () => {
     const [upNext, setUpNext] = useState([]);
+    const [goals, setGoals] = useState([]);
     const [onboardingVisible, setOnboardingVisible] = useState(false);    
 
     useEffect(() => {
@@ -31,10 +32,6 @@ export default FeedScreen = () => {
         setOnboardingVisible(!onboardingVisible);
     }
 
-    useEffect(() => {
-        console.log(
-            upNext)
-    }, [upNext])
 
     const toggleComplete = (index) => {
         // todo toggle complete on backend
@@ -62,6 +59,15 @@ export default FeedScreen = () => {
         )
     }
 
+    const renderGoal = (item, index) => {
+        return (
+            <View style={{flexDirection: "row"}}>
+                <Feather name={item.completed ? "check-circle" : "circle"} color={colors.dark} size={32}/>
+                <Text style={[uStyles.body, {color: colors.black, paddingHorizontal: 16}]}>{"I will " + item.goal + " by " + item.day + "."}</Text>
+            </View>
+        )
+    }
+
     return (
         <View style={styles.container}>
 
@@ -85,6 +91,14 @@ export default FeedScreen = () => {
                 <View style={[uStyles.searchCard, {marginTop: 12, height: 300}]}>
                     <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>All Planned</Text>
                     
+                    <FlatList
+                        data={goals}
+                        renderItem={({item, index}) => renderGoal(item, index)}
+                        keyExtractor={(item) => item.id.toString()}
+                        style={{flex: 1, height: "100%", paddingTop: 12}}
+                        contentContainerStyle={{paddingBottom: 12}}
+                        showsVerticalScrollIndicator={false}
+                    />
                     
                 </View>
             </Reanimatable.View>
