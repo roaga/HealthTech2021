@@ -136,9 +136,9 @@ export default ProfileScreen = () => {
                     <TouchableOpacity style={{alignItems: "right", marginTop: 32, marginLeft: 16}} onPress={() => toggleSettings()}>
                         <Feather name="settings" size={24} color={colors.white}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{alignItems: "right", marginTop: 32, marginLeft: 16}} onPress={() => toggleNotifications()}>
+                    {/* <TouchableOpacity style={{alignItems: "right", marginTop: 32, marginLeft: 16}} onPress={() => toggleNotifications()}>
                         <Feather name="bell" size={24} color={unreadNotifications ? colors.primary : colors.white}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
         </View>
