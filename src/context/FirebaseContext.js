@@ -89,7 +89,7 @@ const Firebase = {
         sentiment = sentiment["sentiment"].slice(Math.max(sentiment["sentiment"].length - 5, 0)); // get last 5 sentiments
         let sentimentSum = sentiment.reduce((a, b) => a + b, 0);
         if (sentimentSum < 0) {
-            return "Try changing up your workout, because we think something's not working for you.\nExperiment with the type, frequency, and intensity of exercise."
+            return "Something's not working for you.\nTry changing up type, frequency, and intensity."
         } else {
             return "Keep at it! You've been doing great!"
         }

@@ -102,6 +102,7 @@ export default GameScreen = () => {
                             <ProgressBar progress={0.5} color={colors.dark} style={{height: 35}}/>
                         </View>
                     </View> */}
+                    <Reanimatable.View animation="slideInUp" duration={500}>
                     <View style={[uStyles.searchCard, {height: 500}]}>
                         <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>History</Text>
                         <View style={styles.container2}>
@@ -126,6 +127,7 @@ export default GameScreen = () => {
                             </View>
                         </View>
                     </View>
+                    </Reanimatable.View>
                 </ScrollView>
             </ViewShot>
 
