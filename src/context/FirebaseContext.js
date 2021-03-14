@@ -5,6 +5,7 @@ import 'firebase/firestore'
 import 'firebase/functions'
 
 import config from '../config/firebase'
+import { getMediaLibraryPermissionsAsync } from 'expo-image-picker'
 
 const FirebaseContext = createContext();
 
@@ -20,17 +21,12 @@ const functions = firebase.functions();
 
 const Firebase = {
     // main app functions
-    addGoal: async (uid, text, dueDate, progress) => {
+    addGoal: async (goal) => {
         await db.collection("goals").add({
-            uid: uid,
-            text: text,
-            dueDate: dueDate,
-            progress: progress
-        }).then(docRef => {
-            // add to user's list
-            db.collection("users").doc(uid).update({
-                goals
-            })
+            uid: goal.uid,
+            goal: goal.goal,
+            day: goal.day,
+            completed: goal.completed
         });
     },
     getGoals: () => {
@@ -42,8 +38,15 @@ const Firebase = {
     deleteGoal: () => {
 
     },
-    addTodo: () => {
-
+    addTodo: async (todo) => {
+        await db.collection("intentions").add({
+            uid: todo.uid,
+            quantity: todo.quantity,
+            exercise: todo.exercise,
+            day: todo.day,
+            time: todo.time,
+            place: todo.place
+        })
     },
     getTodos: () => {
 

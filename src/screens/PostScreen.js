@@ -13,29 +13,25 @@ import {FirebaseContext} from "../context/FirebaseContext"
 import {getQuote} from '../scripts/quoteGetter'
 import {AI} from '../scripts/AI'
 import {TestDB} from '../scripts/TestDB'
-import firebase from 'firebase'
-
-import {setIntention} from '../scripts/intentionSetter'
-
-import config from '../config/firebase'
-
 
 export default PostScreen = () => {
-    const [todo, setTodo] = useState({id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: "", completed: false});
-    const [goal, setGoal] = useState({id: "", uid: "", goal: "", day: "", completed: false});
+    const firebase = useContext(FirebaseContext);
+    const [todo, setTodo] = useState({uid: firebase.getCurrentUser().uid, quantity: "", exercise: "", day: "", time: "", place: "", completed: false});
+    const [goal, setGoal] = useState({uid: firebase.getCurrentUser().uid, goal: "", day: "", completed: false});
     const [todoOverGoal, setTodoOverGoal] = useState(true);
-    
-
 
     useEffect(() => {
-        AI.analyzeSentiment("I love this awesome freaking intelligent smart workout app");
-        getQuote.giveQuote("test");
+        
     }, []);
 
     const sendTodo = () => {
-        // todo: call backend
-        setIntention.setIntention(todo);
-        setTodo({id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: ""});
+        firebase.addTodo(todo);
+        setTodo({uid: firebase.getCurrentUser().uid, quantity: "", exercise: "", day: "", time: "", place: ""});
+    }
+
+    const sendGoal = () => {
+        firebase.addGoal(goal);
+        setGoal({uid: firebase.getCurrentUser().uid, goal: "", day: "", completed: false});
     }
 
     const flip = () => {
@@ -53,6 +49,7 @@ export default PostScreen = () => {
                             style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
                             placeholder={todoOverGoal ? "enter a quantity..." : "enter a goal..."}
                             placeholderTextColor={colors.dark}
+                            autoCapitalize={false}
                             onChangeText={text => {
                                 if (todoOverGoal) {
                                     let newPost = {...todo};
@@ -64,7 +61,7 @@ export default PostScreen = () => {
                                     setGoal(newPost);
                                 }
                             }}
-                            value={todo.quantity}
+                            value={todoOverGoal ? todo.quantity : goal.goal}
                             maxLength={2000}
                         />
 
@@ -73,6 +70,7 @@ export default PostScreen = () => {
                             style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
                             placeholder={"enter an exercise..."}
                             placeholderTextColor={colors.dark}
+                            autoCapitalize={false}
                             onChangeText={text => {
                                 if (todoOverGoal) {
                                     let newPost = {...todo};
@@ -84,7 +82,7 @@ export default PostScreen = () => {
                                     setGoal(newPost);
                                 }
                             }}
-                            value={todo.exercise}
+                            value={todoOverGoal ? todo.exercise : goal.day}
                             maxLength={2000}
                         />
 
@@ -95,6 +93,7 @@ export default PostScreen = () => {
                                 style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
                                 placeholder={"enter a day..."}
                                 placeholderTextColor={colors.dark}
+                                autoCapitalize={false}
                                 onChangeText={text => {
                                     let newPost = {...todo};
                                     newPost.day = text;
@@ -109,6 +108,7 @@ export default PostScreen = () => {
                                 style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
                                 placeholder={"enter a time..."}
                                 placeholderTextColor={colors.dark}
+                                autoCapitalize={false}
                                 onChangeText={text => {
                                     let newPost = {...todo};
                                     newPost.time = text;
@@ -123,6 +123,7 @@ export default PostScreen = () => {
                                 style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
                                 placeholder={"enter a place..."}
                                 placeholderTextColor={colors.dark}
+                                autoCapitalize={false}
                                 onChangeText={text => {
                                     let newPost = {...todo};
                                     newPost.place = text;
@@ -161,7 +162,13 @@ export default PostScreen = () => {
             <View style={uStyles.topBar}>
                 <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>{todoOverGoal ? "Plan a Workout" : "Plan a Goal"}</Text>
                 <View style={{flexDirection: "row"}}>
-                    <TouchableOpacity style={{alignItems: "right", marginTop: 32, marginLeft: 16}} onPress={() => sendTodo()}>
+                    <TouchableOpacity style={{alignItems: "right", marginTop: 32, marginLeft: 16}} onPress={() => {
+                        if (todoOverGoal) {
+                            sendTodo();
+                        } else {
+                            sendGoal();
+                        }
+                    }}>
                             <Feather name="send" size={24} color={colors.white}/>
                     </TouchableOpacity>
                 </View>

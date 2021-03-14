@@ -7,7 +7,6 @@ import * as ImagePicker from 'expo-image-picker'
 
 import {uStyles, colors} from '../styles.js'
 import {ImageUpload} from "../scripts/ImageUpload"
-import {FirebaseContext} from "../context/FirebaseContext"
 import { UserContext } from '../context/UserContext.js';
 
 export default SignUpScreen = ({navigation}) => {

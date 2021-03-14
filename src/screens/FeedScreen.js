@@ -82,7 +82,7 @@ export default FeedScreen = () => {
                     <FlatList
                         data={upNext}
                         renderItem={({item, index}) => renderTodo(item, index)}
-                        keyExtractor={(item) => item.id.toString()}
+                        keyExtractor={(item) => item.uid.toString() + item.day.toString() + item.quantity.toString() + item.exercise.toString()}
                         style={{flex: 1, height: "100%", paddingTop: 12}}
                         contentContainerStyle={{paddingBottom: 12}}
                         showsVerticalScrollIndicator={false}
