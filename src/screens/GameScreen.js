@@ -1,9 +1,12 @@
 import React, {useRef, useState, useEffect} from 'react'
-import {View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, FlatList} from 'react-native'
+import {View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Image, ScrollView, FlatList} from 'react-native'
 import {StatusBar} from 'expo-status-bar';
 import * as Sharing from 'expo-sharing';
 import {Feather} from "@expo/vector-icons";
 import ViewShot from "react-native-view-shot";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { BarChart, ProgressCircle, XAxis, Grid } from 'react-native-svg-charts'
 import * as Reanimatable from 'react-native-animatable';
 import { ProgressBar, Colors } from 'react-native-paper';
@@ -55,7 +58,7 @@ export default GameScreen = () => {
                 <ScrollView style={{marginTop: 98}} contentContainerStyle={{paddingBottom: 96}}>
                     <Reanimatable.View animation="slideInUp" duration={500}>
                         <View style={[uStyles.searchCard, {height: 400}]}>
-                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Streak</Text>                   
+                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8, fontSize: "30"}]}>Streak</Text>                   
                             <Text style={[uStyles.body, {alignSelf: "center", color: colors.black, marginTop: 16}]}>You have a {tempPointsData.map(item => (item.Streak)).reduce((a, b) => a + b)} day streak!</Text>
                             <Text></Text>
                             <Text></Text>
@@ -79,18 +82,10 @@ export default GameScreen = () => {
                             />
                         </View>
                     </Reanimatable.View>
-                    {/* <Reanimatable.View animation="slideInUp" duration={500}>
-                        <View style={[uStyles.searchCard, {height: 340}]} animation="slideInUp" duration={500}>
-                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Up Next (Bullets incoming)</Text>
-                            <Text style={[uStyles.body, {alignSelf: "flex-start", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: 20}]}> - You have to do 20 pushups today</Text>
-                            <Text style={[uStyles.body, {alignSelf: "flex-start", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: 20}]}> - You have to do yoga for 10 mins</Text>
-                            <Text style={[uStyles.body, {alignSelf: "flex-start", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: 20}]}> - You have to do 10 sit-ups</Text>
-                        </View>
-                    </Reanimatable.View> */}
                     
-                    <View style={[uStyles.searchCard, {height: 754}]}>
+                    <View style={[uStyles.searchCard, {height: 500}]}>
                         <View>
-                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Overall Goal Progress</Text>
+                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8, fontSize: "30"}]}>Overall Goal Progress</Text>
                             <Text style={[uStyles.body, {alignSelf: "center", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: "20"}]}>Pushups</Text>
                             <Text style={{color: "darkgreen", alignSelf: "center"}}>300 Completed</Text>
                             <Text></Text>
@@ -111,19 +106,44 @@ export default GameScreen = () => {
                             <ProgressBar progress={0.5} color={colors.dark} style={{height: 35}}/>
                         </View>
                     </View>
+                    <View style={[uStyles.searchCard, {height: 500}]}>
+                        <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8, fontSize: "30"}]}>History</Text>
+                        <View style={styles.container2}>
+                            <View style={styles.box}>
+                                <View style={styles.inner}>
+                                <MaterialCommunityIcons name="target" size={90} color="white" />
+                                    <Text style={[uStyles.body, {color: colors.white, fontSize: 20}]}>Number of Goals Completed</Text>
+                                    <Text></Text>
+                                    <Text style={{color: colors.primary}}>35 Goals Completed</Text>
+                                </View>
+                            </View>
+                            <View style={styles.box}>
+                                <View style={styles.inner}>
+                                <MaterialIcons name="mood" size={90} color="white" />
+                                    <Text style={[uStyles.body, {color: colors.white, fontSize: 20}]}>Your Recent Mood</Text>
+                                    <Text></Text>
+                                    <Text style={{color: colors.primary}}>Happy</Text>
+                                </View>
+                            </View>
+                            <View style={styles.box2}>
+                                <View style={styles.inner}>
+                                <FontAwesome5 name="fire" size={90} color="white" />
+                                    <Text></Text>
+                                    <Text style={[uStyles.body, {color: colors.white, fontSize: 20}]}>Highest Streak</Text>
+                                    <Text></Text>
+                                    <Text style={{color: colors.primary}}>50 days</Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
                 </ScrollView>
             </ViewShot>
 
-            <View style={uStyles.roundButtonArray}>
-                <TouchableOpacity style={uStyles.roundButton} onPress={() => sharePost()}>
-                    <Feather name="share" size={24} color={colors.white}/>
-                </TouchableOpacity>
-            </View>
-
             <View style={uStyles.topBar}>
+                
                 <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>Your Progress</Text>
-            </View>
 
+            </View>
             <StatusBar style="light" />
         </View>
     );
@@ -136,4 +156,36 @@ const styles = StyleSheet.create({
     barPosition: {
         alignItems: 'center'
     },
+    container2: {
+        margin: 'auto',
+        height: '85%',
+        padding: 10,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    box: {
+        width: '50%',
+        height: '50%',
+        padding: 5,
+        borderRadius: 17,
+        borderWidth: 1,
+        borderColor: '#fff',
+        backgroundColor: colors.black
+    },
+    box2: {
+        width: '100%',
+        height: '50%',
+        padding: 5,
+        borderRadius: 17,
+        borderWidth: 1,
+        borderColor: '#fff',
+        backgroundColor: colors.black
+    }, 
+    inner: {
+        flex: 1,
+        backgroundColor: '#eee',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colors.black,
+    }
 });
