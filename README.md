@@ -8,14 +8,14 @@ What it does
 FitFeelsGood uses a form of implementation intentions which are proven to more than double the chances of success. Helps the user make plans with these implementation intentions as well as set goals. Tracks the users progress through goals and completion of planned activities. Uses sentiment analysis on a one sentence response to the question “How are you feeling?” to gauge how user feels after every exercise session. Uses this sentiment analysis to personalize experience to the user, suggesting harder or easier workouts. This allows the app to push the user without pushing them too much, and allows for a custom-tailored experience for each user.
 
 
-# Tech Stack:
+# Tech Stack
 
-React Native using Google Firebase for backend data management.
+React Native using Google Firebase for backend data management. We also use sentiment analysis APIs.
 
 # Getting Started
 
-Clone or download the repo and run using expo start (requires yarn and expo-cli to be installed)
+Clone or download the repo and run using expo start (requires yarn and expo-cli to be installed).
 
 
 
-Made with ♥ by Rohan Agarwal, Taran Agnihotri, and Harysh Magesh
+Made with ♥ by Rohan Agarwal, Taran Agnihotri, and Harysh Magesh at HealthTech 2021.
