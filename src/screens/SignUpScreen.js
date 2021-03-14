@@ -8,6 +8,7 @@ import * as ImagePicker from 'expo-image-picker'
 import {uStyles, colors} from '../styles.js'
 import {ImageUpload} from "../scripts/ImageUpload"
 import { UserContext } from '../context/UserContext.js';
+import { FirebaseContext } from '../context/FirebaseContext.js';
 
 export default SignUpScreen = ({navigation}) => {
     const [name, setName] = useState("");
@@ -49,7 +50,7 @@ export default SignUpScreen = ({navigation}) => {
         <KeyboardAvoidingView behavior={"padding"} style={styles.container}>
             <ScrollView>
                 <Text style={uStyles.header}>
-                    {'Welcome to HealthTech.'}
+                    {'Welcome to FitFeelsGood.'}
                 </Text>
 
                 <View style={{alignItems: "center"}}>

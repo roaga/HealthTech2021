@@ -5,7 +5,6 @@ import 'firebase/firestore'
 import 'firebase/functions'
 
 import config from '../config/firebase'
-import { getMediaLibraryPermissionsAsync } from 'expo-image-picker'
 
 const FirebaseContext = createContext();
 

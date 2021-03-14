@@ -4,8 +4,8 @@ import {StatusBar} from 'expo-status-bar';
 import * as firebase from 'firebase'
 
 import {uStyles, colors} from '../styles'
-import {FirebaseContext} from "../context/FirebaseContext"
 import {UserContext} from '../context/UserContext'
+import {FirebaseContext} from "../context/FirebaseContext"
 
 export default LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState("");

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createStackNavigator} from '@react-navigation/stack'
 
 import LoginScreen from '../screens/LoginScreen'
 import SignUpScreen from '../screens/SignUpScreen'
+import FirebaseContext from '../context/FirebaseContext'
 
 export default AuthStackScreens = () => {
     const AuthStack = createStackNavigator();

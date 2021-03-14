@@ -78,7 +78,7 @@ export default PostScreen = () => {
                         <Text style={[uStyles.header, {color: colors.black, marginTop: 16}]}>{todoOverGoal ? "of" : "by"}</Text>
                         <TextInput 
                             style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
-                            placeholder={"enter an exercise..."}
+                            placeholder={todoOverGoal ? "enter an exercise..." : "enter a date..."}
                             placeholderTextColor={colors.dark}
                             autoCapitalize={"none"}
                             onChangeText={text => {

@@ -68,7 +68,7 @@ export default FeedScreen = () => {
 
     const renderTodo = (item, index) => {
         return (
-            <View style={{flexDirection: "row"}}>
+            <View style={{flexDirection: "row", marginBottom: 8, marginRight: 12}}>
                 <TouchableOpacity onPress={() => {
                     toggleTodoComplete(index); 
                 }}>
