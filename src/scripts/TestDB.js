@@ -22,6 +22,15 @@ const TestDB = {
             username: "hmagesh3",
             profilePhotoUrl:"default" 
         })
+        const motivationalQuotes = []
+        await db.collection("motivationalQuotes").get()
+            .then(querySnapshot => {
+                querySnapshot.docs.forEach(doc => {
+                motivationalQuotes.push(doc.data());
+          });
+        });
+        console.log(motivationalQuotes)
+
     }
 }
 
