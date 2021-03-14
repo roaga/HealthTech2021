@@ -29,11 +29,7 @@ export default GameScreen = () => {
     const types = ['Streak'];
 
     useEffect(() => {
-        // get milestone of month
-
-        // get local milestones
-
-        // generate new milestones if needed
+        // get History
     }, []);
 
 
@@ -57,7 +53,7 @@ export default GameScreen = () => {
             <ViewShot ref={view} style={{height: "100%"}}>
                 <ScrollView style={{marginTop: 98}} contentContainerStyle={{paddingBottom: 96}}>
                     <Reanimatable.View animation="slideInUp" duration={500}>
-                        <View style={[uStyles.searchCard, {height: 400}]}>
+                        <View style={[uStyles.searchCard, {height: 350}]}>
                             <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8, fontSize: "30"}]}>Streak</Text>                   
                             <Text style={[uStyles.body, {alignSelf: "center", color: colors.black, marginTop: 16}]}>You have a {tempPointsData.map(item => (item.Streak)).reduce((a, b) => a + b)} day streak!</Text>
                             <Text></Text>
@@ -68,7 +64,7 @@ export default GameScreen = () => {
                             </View>
                             <Text></Text>
                             <Text style={{alignSelf: "center"}}>Streak Goal: 100 days</Text>
-                            <FlatList
+                            {/* <FlatList
                                 data={tempPointsData}
                                 renderItem={renderCauseItem}
                                 keyExtractor={(item) => item}
@@ -79,11 +75,11 @@ export default GameScreen = () => {
                                 removeClippedSubviews={true} // Unmount components when outside of window 
                                 initialNumToRender={2} // Reduce initial render amount
                                 maxToRenderPerBatch={1} // Reduce number in each render batch
-                            />
+                            /> */}
                         </View>
                     </Reanimatable.View>
                     
-                    <View style={[uStyles.searchCard, {height: 500}]}>
+                    {/* <View style={[uStyles.searchCard, {height: 500}]}>
                         <View>
                             <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8, fontSize: "30"}]}>Overall Goal Progress</Text>
                             <Text style={[uStyles.body, {alignSelf: "center", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: "20"}]}>Pushups</Text>
@@ -105,33 +101,27 @@ export default GameScreen = () => {
                             <Text></Text>
                             <ProgressBar progress={0.5} color={colors.dark} style={{height: 35}}/>
                         </View>
-                    </View>
+                    </View> */}
                     <View style={[uStyles.searchCard, {height: 500}]}>
                         <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8, fontSize: "30"}]}>History</Text>
                         <View style={styles.container2}>
                             <View style={styles.box}>
                                 <View style={styles.inner}>
-                                <MaterialCommunityIcons name="target" size={90} color="white" />
-                                    <Text style={[uStyles.body, {color: colors.white, fontSize: 20}]}>Number of Goals Completed</Text>
-                                    <Text></Text>
-                                    <Text style={{color: colors.primary}}>35 Goals Completed</Text>
+                                    <FontAwesome5 name="flag-checkered" size={48} color="white" />
+                                    <Text style={[uStyles.subheader, {color: colors.primary, paddingTop: 8, textAlign: "center"}]}>35 Goals</Text>
                                 </View>
                             </View>
                             <View style={styles.box}>
                                 <View style={styles.inner}>
-                                <MaterialIcons name="mood" size={90} color="white" />
-                                    <Text style={[uStyles.body, {color: colors.white, fontSize: 20}]}>Your Recent Mood</Text>
-                                    <Text></Text>
-                                    <Text style={{color: colors.primary}}>Happy</Text>
+                                    <FontAwesome5 name="check-circle" size={48} color="white" />
+                                    <Text style={[uStyles.subheader, {color: colors.primary, paddingTop: 8, textAlign: "center"}]}>124 Intentions</Text>
                                 </View>
                             </View>
                             <View style={styles.box2}>
                                 <View style={styles.inner}>
-                                <FontAwesome5 name="fire" size={90} color="white" />
+                                <FontAwesome5 name="fire-alt" size={48} color="white" />
                                     <Text></Text>
-                                    <Text style={[uStyles.body, {color: colors.white, fontSize: 20}]}>Highest Streak</Text>
-                                    <Text></Text>
-                                    <Text style={{color: colors.primary}}>50 days</Text>
+                                    <Text style={[uStyles.subheader, {color: colors.primary, paddingTop: 8, textAlign: "center"}]}>50 Day Max Streak</Text>
                                 </View>
                             </View>
                         </View>
@@ -166,20 +156,22 @@ const styles = StyleSheet.create({
     box: {
         width: '50%',
         height: '50%',
-        padding: 5,
-        borderRadius: 17,
+        padding: 12,
+        borderRadius: 20,
         borderWidth: 1,
         borderColor: '#fff',
-        backgroundColor: colors.black
+        backgroundColor: colors.black,
+        margin: 0
     },
     box2: {
         width: '100%',
         height: '50%',
-        padding: 5,
-        borderRadius: 17,
+        padding: 12,
+        borderRadius: 20,
         borderWidth: 1,
         borderColor: '#fff',
-        backgroundColor: colors.black
+        backgroundColor: colors.black,
+        margin: 2
     }, 
     inner: {
         flex: 1,
