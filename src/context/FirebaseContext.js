@@ -45,7 +45,8 @@ const Firebase = {
             exercise: todo.exercise,
             day: todo.day,
             time: todo.time,
-            place: todo.place
+            place: todo.place,
+            completed: todo.completed
         })
     },
     getTodos: () => {
