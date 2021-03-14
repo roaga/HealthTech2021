@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Mo
 import {StatusBar} from 'expo-status-bar';
 import {Feather} from "@expo/vector-icons";
 import DropDownPicker from 'react-native-dropdown-picker';
+import * as Reanimatable from 'react-native-animatable';
 
 import {uStyles, colors} from '../styles.js'
 import {ImageUpload} from '../scripts/ImageUpload'
@@ -12,8 +13,8 @@ import {AI} from '../scripts/AI'
 import {FirebaseContext} from "../context/FirebaseContext"
 
 export default PostScreen = () => {
-    const [todo, setTodo] = useState({id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: ""});
-    const [goal, setGoal] = useState({id: "", uid: "", goal: "", day: ""});
+    const [todo, setTodo] = useState({id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: "", completed: false});
+    const [goal, setGoal] = useState({id: "", uid: "", goal: "", day: "", completed: false});
     const [todoOverGoal, setTodoOverGoal] = useState(true);
     const firebase = useContext(FirebaseContext);
 
@@ -34,7 +35,7 @@ export default PostScreen = () => {
         <View style={styles.container}>
             <KeyboardAvoidingView behavior={"padding"}>
                 <ScrollView style={{marginTop: 96, paddingBottom: 96, overflow: "hidden",}}>
-
+                    <Reanimatable.View animation="slideInUp" duration={500}>
                     <View style={[uStyles.postCard, {height: "70%"}]}>
                         <Text style={[uStyles.header, {color: colors.black, marginTop: 32}]}>{todoOverGoal ? "I will do" : "I will"}</Text>
                         <TextInput 
@@ -124,11 +125,10 @@ export default PostScreen = () => {
                             null
                         }
                     </View>
-
                     <View style={{marginBottom: 256, alignItems: "center"}}>
 
                     </View>
-
+                    </Reanimatable.View>
                 </ScrollView>
             </KeyboardAvoidingView>
 

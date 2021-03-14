@@ -1,10 +1,11 @@
 import React, {useState, useCallback, useEffect, useRef, createRef} from 'react'
-import {View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, FlatList, Modal} from 'react-native'
+import {View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, FlatList, Modal, ScrollView} from 'react-native'
 import {StatusBar} from 'expo-status-bar';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {Feather} from "@expo/vector-icons";
 import ViewShot from "react-native-view-shot";
 import * as Sharing from 'expo-sharing';
+import * as Reanimatable from 'react-native-animatable';
 
 import {uStyles, colors} from '../styles.js'
 import PostCard from '../components/PostCard'
@@ -13,20 +14,8 @@ import checkIfFirstLaunch from '../scripts/CheckFirstLaunch';
 import ProfileModal from '../components/ProfileModal.js';
 
 export default FeedScreen = () => {
-    const tempData = [
-        {id: "141415252", username: "Aritro", uid: "8301u410", pfpUrl: "default", imageUrl: "houar", link: "https://expo.io", caption: "uaohfauwf", type: "Volunteering", cause: "Environment", likes: 32, profileVisits: 10, shares: 2, comments: [{id: "23804u2309", username: "Rohan", uid: "owrhf", text: "oierjhe"},]},
-        {id: "1414152523", username: "Hane", uid: "238823", pfpUrl: "default", imageUrl: "ref", link: "", caption: "fefe", type: "Volunteering", cause: "Environment", likes: 33, profileVisits: 3, shares: 12, comments: [{id: "2049230942", username: "Rohan", uid: "owrhf", text: "oierjhe"},]},
-    ];
-    const [liked, setLiked] = useState([]);
-    const [category, setCategory] = useState("foryou"); 
-    const [postIndex, setPostIndex] = useState();
-    const [commentsModalVisible, setCommentsModalVisible] = useState(false);
-    const [profileModalVisible, setProfileModalVisible] = useState(false);
-    const [onboardingVisible, setOnboardingVisible] = useState(false);
-    const [recentPoints, setRecentPoints] = useState();
-    const [time, setTime] = useState(0);
-    const postRefs = useRef(tempData.map(() => createRef()));
-    
+    const [upNext, setUpNext] = useState([]);
+    const [onboardingVisible, setOnboardingVisible] = useState(false);    
 
     useEffect(() => {
         //TODO: get posts from backend, setLiked
@@ -36,89 +25,70 @@ export default FeedScreen = () => {
             setOnboardingVisible(isFirstLaunch);
         }
         getIsFirstLaunch();
-
-        const timer = setInterval(() => {
-            setTime(time => time + 1);
-        }, 1000);
-        return () => clearInterval(timer);
     }, []);
-
-    useEffect(() => {
-        if (time > 3) {
-            setRecentPoints(undefined);
-        }
-    }, [time])
-    
-    const renderPost = ({item, index}) => {
-        return (
-            <ViewShot ref={postRefs.current[index]}>
-                <PostCard post={item}/>
-            </ViewShot>
-        )
-    }
-
-    const setPoints = (num) => {
-        setRecentPoints(recentPoints ? num + recentPoints : num);
-        setTime(0)
-        //TODO: add points on backend side, update contexts, etc.
-    }
-
-    const onViewChange = useCallback(({ viewableItems, changed }) => {
-        if (viewableItems.length > 0) {
-            setPostIndex(viewableItems[0].index);
-        }
-    }, []);
-
-    const toggleComments = (index) => {
-        setCommentsModalVisible(!commentsModalVisible);
-        if (!commentsModalVisible) {
-            setPoints(2);
-        }
-    }
-
 
     const toggleOnboarding = () => {
         setOnboardingVisible(!onboardingVisible);
     }
 
-    const visitProfile = () => {
-        setProfileModalVisible(!profileModalVisible);
-        // TODO: add count to profileVisits for that post
-        if (!profileModalVisible) {
-            setPoints(2);
-        }
+    useEffect(() => {
+        console.log(
+            upNext)
+    }, [upNext])
+
+    const toggleComplete = (index) => {
+        // todo toggle complete on backend
+
+        // togle complete on state
+        let newUpNext = [...upNext];
+        console.log('hi')
+        console.log(newUpNext)
+        console.log(newUpNext[index].completed)
+        newUpNext[index].completed = !newUpNext[index].completed;
+        console.log(newUpNext)
+        setUpNext(newUpNext);
     }
 
-    const sharePost = async (index) => {
-        postRefs.current[index].current.capture().then(uri => {
-            Sharing.shareAsync(uri);
-        });
-        setPoints(5);
-    }
-
-    const toggleLikePost = (index) => {
-        // TODO: handle logic (setLike) and backend for liking/unliking, add points, setRecentPoints
-        //TODO: add an if statement here to only set recent points if liking, not unliking
-        setPoints(1);
+    const renderTodo = (item, index) => {
+        return (
+            <View style={{flexDirection: "row"}}>
+                <TouchableOpacity onPress={() => {
+                    toggleComplete(index); 
+                }}>
+                    <Feather name={item.completed ? "check-circle" : "circle"} color={colors.dark} size={32}/>
+                </TouchableOpacity>
+                <Text style={[uStyles.body, {color: colors.black, paddingHorizontal: 16}]}>{"I will do " + item.quantity + " of " + item.exercise + " on " + item.day + " at " + item.time + " in " + item.place + "."}</Text>
+            </View>
+        )
     }
 
     return (
         <View style={styles.container}>
 
-            <FlatList
-                data={tempData}
-                renderItem={renderPost}
-                keyExtractor={(item) => item.id.toString()}
-                onViewableItemsChanged={onViewChange}
-                viewabilityConfig={{itemVisiblePercentThreshold: 50}}
-                style={{flex: 1, height: "100%", paddingTop: 96}}
-                contentContainerStyle={{paddingBottom: 192}}
-                showsVerticalScrollIndicator={false}
-                removeClippedSubviews={true} // Unmount components when outside of window 
-                initialNumToRender={2} // Reduce initial render amount
-                maxToRenderPerBatch={1} // Reduce number in each render batch
-            />
+            <Reanimatable.View animation="slideInUp" duration={500}>
+                <View style={[uStyles.searchCard, {marginTop: 108, height: 300}]}>
+                    <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Up Next</Text>
+                    
+                    <FlatList
+                        data={upNext}
+                        renderItem={({item, index}) => renderTodo(item, index)}
+                        keyExtractor={(item) => item.id.toString()}
+                        style={{flex: 1, height: "100%", paddingTop: 12}}
+                        contentContainerStyle={{paddingBottom: 12}}
+                        showsVerticalScrollIndicator={false}
+                    />
+                    
+                </View>
+            </Reanimatable.View>
 
+            <Reanimatable.View animation="slideInUp" duration={500}>
+                <View style={[uStyles.searchCard, {marginTop: 12, height: 300}]}>
+                    <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>All Planned</Text>
+                    
+                    
+                </View>
+            </Reanimatable.View>
+{/* 
             <View style={uStyles.roundButtonArray}>
                 <Text style={[uStyles.body, {color: colors.primary, textAlign: 'center'}]}>{recentPoints ? "+" + recentPoints + "!" : ""}</Text>
 
@@ -138,12 +108,12 @@ export default FeedScreen = () => {
                     <Feather name="share" size={24} color={colors.white}/>
                     <Text style={[uStyles.message, {fontSize: 8}]}>{postIndex !== undefined ? tempData[postIndex].shares : "-"}</Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
 
             <View style={uStyles.topBar}>
-                <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>SCA</Text>
+                <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>Stick to It!</Text>
                 <View style={{flexDirection: "row"}}>
-                    <DropDownPicker
+                    {/* <DropDownPicker
                         items={[
                             {label: "For You", value: "foryou", icon: () => <Feather name="list" size={18} color={colors.primary}/>},
                             {label: "Fitness", value: "fitness", icon: () => <Feather name="activity" size={18} color={colors.primary}/>},
@@ -161,20 +131,20 @@ export default FeedScreen = () => {
                         searchable
                         searchablePlaceholder={"Search..."}
                         searchableStyle={{borderRadius: 20}}
-                    />
+                    /> */}
                 </View>
             </View>
 
-            <Modal
+            {/* <Modal
                 animationType="slide" 
                 visible={commentsModalVisible} 
                 onRequestClose={() => toggleComments()}
                 transparent={true}
             >
                 <CommentsModal comments={postIndex !== undefined ? tempData[postIndex].comments : []} close={() => toggleComments()}/>
-            </Modal>
+            </Modal> */}
 
-            <Modal
+            {/* <Modal
                 animationType="slide" 
                 visible={profileModalVisible} 
                 onRequestClose={() => visitProfile()}
@@ -185,7 +155,7 @@ export default FeedScreen = () => {
                     username={postIndex !== undefined ? tempData[postIndex].username : ""}
                     close={() => visitProfile()}
                 />
-            </Modal>
+            </Modal> */}
 
             <Modal
                 animationType="slide" 

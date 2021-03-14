@@ -70,7 +70,7 @@ export default ProfileScreen = () => {
                 </TouchableOpacity>
                 <Text style={[uStyles.header, {marginTop: 16}]}>{user.username}</Text>
 
-                <View style={{alignItems: "center", marginTop: 16, flexDirection: "row", justifyContent: "space-between"}}>
+                {/* <View style={{alignItems: "center", marginTop: 16, flexDirection: "row", justifyContent: "space-between"}}>
                     <View style={{flex: 1, alignItems: "center"}}>
                         <Text style={uStyles.subheader}>{userData ? userData.posts.length : "-"}</Text>
                         <Text style={uStyles.body}>Posts</Text>
@@ -83,7 +83,7 @@ export default ProfileScreen = () => {
                         <Text style={uStyles.subheader}>{userData ? userData.causes.length : "-"}</Text>
                         <Text style={uStyles.body}>Causes</Text>
                     </View>
-                </View>
+                </View> */}
 
                 {/* <View>
                     <FlatList
