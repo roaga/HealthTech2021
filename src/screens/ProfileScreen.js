@@ -25,10 +25,10 @@ export default ProfileScreen = () => {
         
     }, []);
 
-    const tempData = [
-        {id: "141415252", username: "Aritro", uid: "8301u410", imageUrl: "houar", link: "https://expo.io", caption: "uaohfauwf", type: "Volunteering", cause: "Environment", likes: 32, profileVisits: 10, shares: 2, comments: [{id: "23804u2309", username: "Rohan", uid: "owrhf", text: "oierjhe"},]},
-        {id: "1414152523", username: "Hane", uid: "238823", imageUrl: "ref", link: "", caption: "fefe", type: "Volunteering", cause: "Environment", likes: 33, profileVisits: 3, shares: 12, comments: [{id: "2049230942", username: "Rohan", uid: "owrhf", text: "oierjhe"},]},
-    ];
+    // const tempData = [
+    //     {id: "141415252", username: "Aritro", uid: "8301u410", imageUrl: "houar", link: "https://expo.io", caption: "uaohfauwf", type: "Volunteering", cause: "Environment", likes: 32, profileVisits: 10, shares: 2, comments: [{id: "23804u2309", username: "Rohan", uid: "owrhf", text: "oierjhe"},]},
+    //     {id: "1414152523", username: "Hane", uid: "238823", imageUrl: "ref", link: "", caption: "fefe", type: "Volunteering", cause: "Environment", likes: 33, profileVisits: 3, shares: 12, comments: [{id: "2049230942", username: "Rohan", uid: "owrhf", text: "oierjhe"},]},
+    // ];
 
     const toggleOnboarding = () => {
         setOnboardingVisible(!onboardingVisible);
@@ -85,7 +85,7 @@ export default ProfileScreen = () => {
                     </View>
                 </View>
 
-                <View>
+                {/* <View>
                     <FlatList
                         data={tempData}
                         renderItem={renderPost}
@@ -97,7 +97,7 @@ export default ProfileScreen = () => {
                         initialNumToRender={2} // Reduce initial render amount
                         maxToRenderPerBatch={1} // Reduce number in each render batch
                     />
-                </View>
+                </View> */}
             </ScrollView>
 
             <Modal

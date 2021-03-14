@@ -142,39 +142,28 @@ export default GameScreen = () => {
                             />
                         </View>
                     </Reanimatable.View>
-
+                    
                     <Reanimatable.View animation="slideInUp" duration={500}>
-                        <View style={[uStyles.searchCard, {height: 340}]} animation="slideInUp" duration={500}>
-                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Impact Facts</Text>
+                        <View style={[uStyles.searchCard, {height: 754}]}>
+                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Milestones</Text>
 
-                            <Feather name="plus-circle" color={colors.primary} size={32} style={{alignSelf: "center"}}/>
-                            <Text style={[uStyles.body, {alignSelf: "center", color: colors.black, marginTop: 16, marginHorizontal: 12, textAlign: "center"}]}>You made a post that engaged 1321 people on Environment!</Text>
-                            <Feather name="share" color={colors.primary} size={32} style={{alignSelf: "center", marginTop: 8}}/>
-                            <Text style={[uStyles.body, {alignSelf: "center", color: colors.black, marginTop: 16, marginHorizontal: 12, textAlign: "center"}]}>You shared a post representing 120 people on Fitness!</Text>
-                            <Feather name="message-circle" color={colors.primary} size={32} style={{alignSelf: "center", marginTop: 8}}/>
-                            <Text style={[uStyles.body, {alignSelf: "center", color: colors.black, marginTop: 16, marginHorizontal: 12, textAlign: "center"}]}>You made a comment on a post that engaged 149 people!</Text>
+                            <View>
+                                <ProgressCircle style={{ height: 250, marginTop: 12}} progress={0.7} progressColor={colors.primary}/>
+                                <Text style={[uStyles.body,{color: colors.black, position: "absolute", top: "50%", alignSelf: "center"}]}>Milestone of the Month</Text>
+                            </View>
+                            <View>
+                                <ProgressCircle style={{ height: 150, marginTop: 16}} progress={0.5} progressColor={colors.primary}/>
+                                <Text style={[uStyles.body,{color: colors.black, position: "absolute", top: "50%", alignSelf: "center"}]}>Milestone 2</Text>
+                            </View>
+                            <View>
+                                <ProgressCircle style={{ height: 150, marginTop: 16}} progress={0.6} progressColor={colors.primary}/>
+                                <Text style={[uStyles.body,{color: colors.black, position: "absolute", top: "50%", alignSelf: "center"}]}>Milestone 3</Text>
+                            </View>
+                            
+                            <Text style={[uStyles.body,{color: colors.black, alignSelf: "center", marginTop: 32}]}>Last completed milestone 4!</Text>
+                            <Text style={[uStyles.body, {alignSelf: "center", color: colors.black, marginTop: 16}]}>32 milestones already reached!</Text>
                         </View>
                     </Reanimatable.View>
-                    
-                    <View style={[uStyles.searchCard, {height: 754}]}>
-                        <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Milestones</Text>
-
-                        <View>
-                            <ProgressCircle style={{ height: 250, marginTop: 12}} progress={0.7} progressColor={colors.primary}/>
-                            <Text style={[uStyles.body,{color: colors.black, position: "absolute", top: "50%", alignSelf: "center"}]}>Milestone of the Month</Text>
-                        </View>
-                        <View>
-                            <ProgressCircle style={{ height: 150, marginTop: 16}} progress={0.5} progressColor={colors.primary}/>
-                            <Text style={[uStyles.body,{color: colors.black, position: "absolute", top: "50%", alignSelf: "center"}]}>Milestone 2</Text>
-                        </View>
-                        <View>
-                            <ProgressCircle style={{ height: 150, marginTop: 16}} progress={0.6} progressColor={colors.primary}/>
-                            <Text style={[uStyles.body,{color: colors.black, position: "absolute", top: "50%", alignSelf: "center"}]}>Milestone 3</Text>
-                        </View>
-                        
-                        <Text style={[uStyles.body,{color: colors.black, alignSelf: "center", marginTop: 32}]}>Last completed milestone 4!</Text>
-                        <Text style={[uStyles.body, {alignSelf: "center", color: colors.black, marginTop: 16}]}>32 milestones already reached!</Text>
-                    </View>
                 </ScrollView>
             </ViewShot>
 

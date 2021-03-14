@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import {View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, Modal, Alert, KeyboardAvoidingView, ScrollView} from 'react-native'
 import {StatusBar} from 'expo-status-bar';
 import {Feather} from "@expo/vector-icons";
@@ -9,186 +9,148 @@ import {ImageUpload} from '../scripts/ImageUpload'
 import PostCard from "../components/PostCard"
 import CameraModal from '../components/CameraModal.js';
 import {AI} from '../scripts/AI'
+import {FirebaseContext} from "../context/FirebaseContext"
 
 export default PostScreen = () => {
-    const [post, setPost] = useState({id: "", username: "", uid: "", imageUrl: "", link: "", caption: "", type: "", cause: "", likes: 0, profileVisits: 0, shares: 0, comments: []});
-    const [camVisible, setCamVisible] = useState(false);
+    const [todo, setTodo] = useState({id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: ""});
+    const [goal, setGoal] = useState({id: "", uid: "", goal: "", day: ""});
+    const [todoOverGoal, setTodoOverGoal] = useState(true);
+    const firebase = useContext(FirebaseContext);
 
     useEffect(() => {
         AI.analyzeSentiment("I love this awesome freaking intelligent smart workout app");
     }, []);
 
-    const sendPost = async () => {
-        if (post.imageUrl.length > 0 && post.cause.length > 0) {
-            Alert.alert(
-            "Make a post",
-                "Are you sure you want to post this?",
-                [
-                  {
-                    text: "Cancel",
-                    style: "cancel",
-                    onPress: () => {return;}
-                  },
-                  {
-                    text: "OK",
-                  }
-                ]
-            );
-            //TODO: add user info
-            let toPost = {...post};
-            toPost.caption = toPost.caption.trim();
-            if (toPost.caption.length === 0) {
-                toPost.link = "";
-            }
-            //TODO: upload
-            
-        } else {
-            Alert.alert("You need an image and a tag!")
-        }
+    const sendTodo = () => {
+        // todo: call backend
+        setTodo({id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: ""});
     }
 
-    const addPostPhoto = async () => {
-        const uri = await ImageUpload.addPhoto();
-        if (uri) {
-            let newPost = {...post};
-            newPost.imageUrl = uri;
-            setPost(newPost);
-        }
-        //TODO: on upload, Firebase needs to create a new URL (not URI) to replace this local value
-    }
-
-    const takePostPhoto = async (camera) => {
-        const uri = await ImageUpload.takePhoto(camera);
-        if (uri) {
-            let newPost = {...post};
-            newPost.imageUrl = uri;
-            setPost(newPost);
-        }
-        //TODO: on upload, Firebase needs to create a new URL (not URI) to replace this local value
-    }
-
-    const linkInput = () => {
-        if (post.caption.length > 0) {
-            Alert.prompt(
-                "Enter link",
-                "Enter a link you want your post to lead to.",
-                [
-                  {
-                    text: "Cancel",
-                    style: "cancel"
-                  },
-                  {
-                    text: "OK",
-                    onPress: text => {
-                        let newPost = {...post};
-                        newPost.link = text;
-                        setPost(newPost);
-                    }
-                  },
-                  {
-                    text: 'Clear',
-                    onPress: () => {
-                        let newPost = {...post};
-                        newPost.link = "";
-                        setPost(newPost);
-                    }
-                  },
-                ],
-              );
-        } else {
-            Alert.alert(
-                "Enter link",
-                "You need a caption before you can add a link.",
-                [
-                  {
-                    text: "OK",
-                    style: "OK"
-                  },
-                ],
-              );
-        }
-    }
-
-    const toggleCamModal = () => {
-        setCamVisible(!camVisible);
+    const flip = () => {
+        setTodoOverGoal(!todoOverGoal);
     }
 
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView behavior={"padding"}>
                 <ScrollView style={{marginTop: 96, paddingBottom: 96, overflow: "hidden",}}>
-                    <PostCard post={post}/>
 
-                    <TextInput 
-                        style={[uStyles.input, {width: "85%", marginTop: 12, alignSelf: "center",}]} 
-                        placeholder={"Add a caption..."}
-                        placeholderTextColor={colors.light}
-                        onChangeText={text => {
-                            let newPost = {...post};
-                            newPost.caption = text;
-                            setPost(newPost);
-                        }}
-                        value={post.caption}
-                        maxLength={2000}
-                    />
+                    <View style={[uStyles.postCard, {height: "70%"}]}>
+                        <Text style={[uStyles.header, {color: colors.black, marginTop: 32}]}>{todoOverGoal ? "I will do" : "I will"}</Text>
+                        <TextInput 
+                            style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
+                            placeholder={todoOverGoal ? "enter a quantity..." : "enter a goal..."}
+                            placeholderTextColor={colors.dark}
+                            onChangeText={text => {
+                                if (todoOverGoal) {
+                                    let newPost = {...todo};
+                                    newPost.quantity = text;
+                                    setTodo(newPost);
+                                } else {
+                                    let newPost = {...goal};
+                                    newPost.goal = text;
+                                    setGoal(newPost);
+                                }
+                            }}
+                            value={todo.quantity}
+                            maxLength={2000}
+                        />
 
-                    <View style={{flexDirection: "row", marginTop: 12, alignItems: "center", justifyContent: "center"}}>
-                        <Feather name="link" size={18} color={colors.light} style={{marginHorizontal: 8, alignSelf: "center"}}/>
-                        <Text style={uStyles.message}>{post.link}</Text>
+                        <Text style={[uStyles.header, {color: colors.black, marginTop: 16}]}>{todoOverGoal ? "of" : "by"}</Text>
+                        <TextInput 
+                            style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
+                            placeholder={"enter an exercise..."}
+                            placeholderTextColor={colors.dark}
+                            onChangeText={text => {
+                                if (todoOverGoal) {
+                                    let newPost = {...todo};
+                                    newPost.exercise = text;
+                                    setTodo(newPost);
+                                } else {
+                                    let newPost = {...goal};
+                                    newPost.day = text;
+                                    setGoal(newPost);
+                                }
+                            }}
+                            value={todo.exercise}
+                            maxLength={2000}
+                        />
+
+                        {todoOverGoal ?
+                            <View>
+                            <Text style={[uStyles.header, {color: colors.black, marginTop: 16}]}>on</Text>
+                            <TextInput 
+                                style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
+                                placeholder={"enter a day..."}
+                                placeholderTextColor={colors.dark}
+                                onChangeText={text => {
+                                    let newPost = {...todo};
+                                    newPost.day = text;
+                                    setTodo(newPost);
+                                }}
+                                value={todo.day}
+                                maxLength={2000}
+                            />
+    
+                            <Text style={[uStyles.header, {color: colors.black, marginTop: 16}]}>at</Text>
+                            <TextInput 
+                                style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
+                                placeholder={"enter a time..."}
+                                placeholderTextColor={colors.dark}
+                                onChangeText={text => {
+                                    let newPost = {...todo};
+                                    newPost.time = text;
+                                    setTodo(newPost);
+                                }}
+                                value={todo.time}
+                                maxLength={2000}
+                            />
+    
+                            <Text style={[uStyles.header, {color: colors.black, marginTop: 16}]}>in</Text>
+                            <TextInput 
+                                style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
+                                placeholder={"enter a place..."}
+                                placeholderTextColor={colors.dark}
+                                onChangeText={text => {
+                                    let newPost = {...todo};
+                                    newPost.place = text;
+                                    setTodo(newPost);
+                                }}
+                                value={todo.place}
+                                maxLength={2000}
+                            />
+                            </View>
+                        :
+                            null
+                        }
                     </View>
 
                     <View style={{marginBottom: 256, alignItems: "center"}}>
-                        <DropDownPicker
-                            items={[
-                                {label: "Fitness", value: "fitness", icon: () => <Feather name="activity" size={18} color={colors.primary}/>},
-                                {label: "Environment", value: "environment", icon: () => <Feather name="globe" size={18} color={colors.primary}/>},
-                            ]}
-                            containerStyle={{height: 32, width: 160, marginTop: 12}}
-                            style={{backgroundColor: colors.light, borderWidth: 0, flexDirection: "row-reverse", borderTopRightRadius: 10, borderTopLeftRadius: 10, borderBottomRightRadius: 10, borderBottomLeftRadius: 10}}
-                            dropDownStyle={{backgroundColor: colors.light, borderWidth: 0, height: 512, borderBottomRightRadius: 10, borderBottomLeftRadius: 10}}
-                            itemStyle={{justifyContent: "flex-start", textAlign: "right"}}
-                            activeItemStyle={{backgroundColor: colors.primary, borderRadius: 10}}
-                            globalTextStyle={[uStyles.body, {color: colors.dark}]}
-                            onChangeItem={item => {
-                                let newPost = {...post};
-                                newPost.cause = item.label;
-                                setPost(newPost);
-                            }}
-                            autoScrollToDefaultValue
-                            searchable
-                            searchablePlaceholder={"Search..."}
-                            searchableStyle={{borderRadius: 20}}
-                        />
+
                     </View>
 
                 </ScrollView>
             </KeyboardAvoidingView>
 
             <View style={uStyles.roundButtonArray}>
-                <TouchableOpacity style={uStyles.roundButton} onPress={() => toggleCamModal()}>
-                    <Feather name="camera" size={24} color={colors.white}/>
-                </TouchableOpacity>
-                <TouchableOpacity style={uStyles.roundButton} onPress={() => addPostPhoto()}>
-                    <Feather name="image" size={24} color={colors.white}/>
-                </TouchableOpacity>
-                <TouchableOpacity style={uStyles.roundButton} onPress={() => linkInput()}>
-                    <Feather name="link" size={24} color={post.link.length > 0 ? colors.primary : colors.white}/>
+                <TouchableOpacity style={uStyles.roundButton} onPress={() => flip()}>
+                    <Feather name="refresh-ccw" size={24} color={colors.white}/>
                 </TouchableOpacity>
             </View>
 
-            <Modal
+            {/* <Modal
                 animationType="slide" 
                 visible={camVisible} 
                 onRequestClose={() => toggleCamModal()}
                 transparent={true}
             >
                 <CameraModal close={() => toggleCamModal()} takePhoto={() => takePostPhoto()}/>
-            </Modal>
+            </Modal> */}
 
             <View style={uStyles.topBar}>
-                <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>Contribute</Text>
+                <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>{todoOverGoal ? "Plan a Workout" : "Plan a Goal"}</Text>
                 <View style={{flexDirection: "row"}}>
-                    <TouchableOpacity style={{alignItems: "right", marginTop: 32, marginLeft: 16}} onPress={() => sendPost()}>
+                    <TouchableOpacity style={{alignItems: "right", marginTop: 32, marginLeft: 16}} onPress={() => sendTodo()}>
                             <Feather name="send" size={24} color={colors.white}/>
                     </TouchableOpacity>
                 </View>
