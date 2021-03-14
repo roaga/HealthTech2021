@@ -13,12 +13,19 @@ import {FirebaseContext} from "../context/FirebaseContext"
 import {getQuote} from '../scripts/quoteGetter'
 import {AI} from '../scripts/AI'
 import {TestDB} from '../scripts/TestDB'
+import firebase from 'firebase'
+
+import {setIntention} from '../scripts/intentionSetter'
+
+import config from '../config/firebase'
+
 
 export default PostScreen = () => {
     const [todo, setTodo] = useState({id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: "", completed: false});
     const [goal, setGoal] = useState({id: "", uid: "", goal: "", day: "", completed: false});
     const [todoOverGoal, setTodoOverGoal] = useState(true);
-    const firebase = useContext(FirebaseContext);
+    
+
 
     useEffect(() => {
         AI.analyzeSentiment("I love this awesome freaking intelligent smart workout app");
@@ -27,6 +34,7 @@ export default PostScreen = () => {
 
     const sendTodo = () => {
         // todo: call backend
+        setIntention.setIntention(todo);
         setTodo({id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: ""});
     }
 
