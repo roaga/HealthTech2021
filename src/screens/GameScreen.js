@@ -4,40 +4,26 @@ import {StatusBar} from 'expo-status-bar';
 import * as Sharing from 'expo-sharing';
 import {Feather} from "@expo/vector-icons";
 import ViewShot from "react-native-view-shot";
-import { StackedBarChart, ProgressCircle, YAxis, XAxis } from 'react-native-svg-charts'
+import { BarChart, ProgressCircle, XAxis, Grid } from 'react-native-svg-charts'
 import * as Reanimatable from 'react-native-animatable';
-
+import { ProgressBar, Colors } from 'react-native-paper';
 import {uStyles, colors} from '../styles.js'
 
 export default GameScreen = () => {
     const view = useRef();
-    const milestones = useState([{}, {}, {}]);
-
-    const tempMilestonesData = {
-        labels: ["Swim", "Bike", "Run"], // optional
-        data: [0.4, 0.6, 0.8]
-    };
 
     const tempPointsData = [
         {
-            cause: "Environment",
-            Thoughts: 3840,
-            Volunteering: 1920,
-            Activism: 960,
-            Contribution: 400,
-            Awareness: 400,
-        },
-        {
-            cause: "Fitness",
-            Thoughts: 4140,
-            Volunteering: 190,
-            Activism: 960,
-            Contribution: 350,
-            Awareness: 400,
+            cause: "Days",
+            Streak: 50,
         },
     ]
 
-    const types = ['Thoughts', 'Volunteering', 'Activism', 'Contribution', 'Awareness'];
+    const fill = 'rgb(134, 65, 244)'
+
+    const data = [50, 10, 40, 95, -4, -24, null, 85, undefined, 0, 35, 53, -53, 24, 50, -20, -80]
+
+    const types = ['Streak'];
 
     useEffect(() => {
         // get milestone of month
@@ -47,30 +33,6 @@ export default GameScreen = () => {
         // generate new milestones if needed
     }, []);
 
-    const getMilestones = async () => {
-
-    }
-
-    const genIndividualMilestones = () => {
-        let maxIndex = 0;
-        let maxSum = 0;
-        let minIndex = 0;
-        let minSum = 0;
-        tempPointsData.forEach((item, index) => {
-            let sum = item.Thoughts + item.Volunteering + item.Activism + item.Contribution + item.Awareness;
-            if (sum > maxSum) {
-                maxIndex = index;
-                maxSum = sum;
-            } else if (sum < minSum) {
-                minIndex = index;
-                minSum = sum;
-            }
-        });
-        return ([
-            {cause: tempPointsData[maxIndex].cause, goal: Math.ceil(maxSum / 100) * 120},
-            {cause: tempPointsData[minIndex].cause, goal: Math.ceil(minSum / 100) * 120}
-        ]);
-    }
 
     const sharePost = async () => {
         view.current.capture().then(uri => {
@@ -93,41 +55,16 @@ export default GameScreen = () => {
                 <ScrollView style={{marginTop: 98}} contentContainerStyle={{paddingBottom: 96}}>
                     <Reanimatable.View animation="slideInUp" duration={500}>
                         <View style={[uStyles.searchCard, {height: 400}]}>
-                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Points</Text>
-
-                            <View style={{flexDirection: "row", marginBottom: 8}}>
-                                <FlatList
-                                    data={tempPointsData}
-                                    scrollEnabled={false}
-                                    renderItem={({item}) => {
-                                        return (
-                                            <Text style={[uStyles.message, {color: colors.dark, fontSize: 8}]}>{item.cause}</Text>
-                                        );
-                                    }}
-                                    keyExtractor={(item) => item.cause}
-                                    style={{flex: 1, height: 200}}
-                                    contentContainerStyle={{flex: 1, justifyContent: "space-evenly"}}
-                                    showsVerticalScrollIndicator={false}
-                                />    
-                                <StackedBarChart
-                                    style={{height: 200, width: "90%"}}
-                                    keys={types} 
-                                    colors={[colors.dark, colors.primary, colors.white, colors.black]}
-                                    data={tempPointsData}
-                                    showGrid={false}
-                                    contentInset={{ top: 8, bottom: 8 }}
-                                    horizontal={true}
-                                />
+                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Streak</Text>                   
+                            <Text style={[uStyles.body, {alignSelf: "center", color: colors.black, marginTop: 16}]}>You have a {tempPointsData.map(item => (item.Streak)).reduce((a, b) => a + b)} day streak!</Text>
+                            <Text></Text>
+                            <Text></Text>
+                            <View>
+                                <ProgressCircle style={{ height: 150, marginTop: 16}} progress={0.5} progressColor={colors.primary}/>
+                                <Text style={[uStyles.body,{color: colors.black, position: "absolute", top: "50%", alignSelf: "center"}]}>50</Text>
                             </View>
-                            <XAxis
-                                style={{ marginHorizontal: 10, width: "90%" }}
-                                data={[0, 1, 2, 3, 4]}
-                                formatLabel={(a, index) => (index * (tempPointsData[0].Thoughts + tempPointsData[0].Volunteering + tempPointsData[0].Activism + tempPointsData[0].Contribution + tempPointsData[0].Awareness) / [0, 1, 2, 3, 4].length)}
-                                contentInset={{ left: 32, right: 16 }}
-                                svg={{ fontSize: 10, fill: colors.black }}
-                            />                    
-                            <Text style={[uStyles.body, {alignSelf: "center", color: colors.black, marginTop: 16}]}>You earned {tempPointsData.map(item => (item.Thoughts + item.Volunteering + item.Activism + item.Contribution + item.Awareness)).reduce((a, b) => a + b)} points total!</Text>
-                            
+                            <Text></Text>
+                            <Text style={{alignSelf: "center"}}>Streak Goal: 100 days</Text>
                             <FlatList
                                 data={tempPointsData}
                                 renderItem={renderCauseItem}
@@ -142,6 +79,7 @@ export default GameScreen = () => {
                             />
                         </View>
                     </Reanimatable.View>
+<<<<<<< Updated upstream
                     
                     <Reanimatable.View animation="slideInUp" duration={500}>
                         <View style={[uStyles.searchCard, {height: 754}]}>
@@ -164,6 +102,41 @@ export default GameScreen = () => {
                             <Text style={[uStyles.body, {alignSelf: "center", color: colors.black, marginTop: 16}]}>32 milestones already reached!</Text>
                         </View>
                     </Reanimatable.View>
+=======
+
+                    <Reanimatable.View animation="slideInUp" duration={500}>
+                        <View style={[uStyles.searchCard, {height: 340}]} animation="slideInUp" duration={500}>
+                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Up Next (Bullets incoming)</Text>
+                            <Text style={[uStyles.body, {alignSelf: "flex-start", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: "20"}]}> - You have to do 20 pushups today</Text>
+                            <Text style={[uStyles.body, {alignSelf: "flex-start", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: "20"}]}> - You have to do yoga for 10 mins</Text>
+                            <Text style={[uStyles.body, {alignSelf: "flex-start", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: "20"}]}> - You have to do 10 sit-ups</Text>
+                        </View>
+                    </Reanimatable.View>
+                    
+                    <View style={[uStyles.searchCard, {height: 754}]}>
+                        <View>
+                            <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Overall Goal Progress</Text>
+                            <Text style={[uStyles.body, {alignSelf: "center", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: "20"}]}>Pushups</Text>
+                            <Text style={{color: "darkgreen", alignSelf: "center"}}>300 Completed</Text>
+                            <Text></Text>
+                            <ProgressBar progress={0.3} color={colors.dark} style={{height: 35}}/>
+                        </View>
+                        <Text></Text>
+                        <View>
+                            <Text style={[uStyles.body, {alignSelf: "center", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: "20"}]}>Curl-ups</Text>
+                            <Text style={{color: "darkgreen", alignSelf: "center"}}>800 Completed</Text>
+                            <Text></Text>
+                            <ProgressBar progress={0.8} color={colors.dark} style={{height: 35}}/>
+                        </View>
+                        <Text></Text>
+                        <View>
+                            <Text style={[uStyles.body, {alignSelf: "center", color: colors.dark, marginTop: 16, marginHorizontal: 12, textAlign: "center", fontSize: "20"}]}>Walk for 10 mins</Text>
+                            <Text style={{color: "darkgreen", alignSelf: "center"}}>500 Completed</Text>
+                            <Text></Text>
+                            <ProgressBar progress={0.5} color={colors.dark} style={{height: 35}}/>
+                        </View>
+                    </View>
+>>>>>>> Stashed changes
                 </ScrollView>
             </ViewShot>
 
@@ -185,5 +158,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.dark,
+    },
+    barPosition: {
+        alignItems: 'center'
     },
 });
