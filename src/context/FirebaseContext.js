@@ -29,8 +29,17 @@ const Firebase = {
             completed: goal.completed
         });
     },
-    getGoals: () => {
-
+    getGoals: async () => {
+        return await db.collection("goals").where("uid", "==", Firebase.getCurrentUser().uid).get().then((querySnapshot) => {
+            let goals = [];
+            querySnapshot.forEach((doc) => {
+                goals.push(doc.data());
+            });
+            return goals;
+        })
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
+        });
     },
     editGoal: () => {
 
@@ -49,8 +58,18 @@ const Firebase = {
             completed: todo.completed
         })
     },
-    getTodos: () => {
-
+    getTodos: async () => {
+        return await db.collection("intentions").where("uid", "==", Firebase.getCurrentUser().uid).get().then((querySnapshot) => {
+            let todos = [];
+            querySnapshot.forEach((doc) => {
+                todos.push(doc.data());
+            });
+            return todos;
+        })
+        .catch((error) => {
+            console.log("Error getting documents: ", error);
+            return [];
+        });
     },
     editTodo: () => {
 

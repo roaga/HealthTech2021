@@ -44,7 +44,7 @@ export default PostScreen = () => {
                 <ScrollView style={{marginTop: 96, paddingBottom: 96, overflow: "hidden",}}>
                     <Reanimatable.View animation="slideInUp" duration={500}>
                     <View style={[uStyles.postCard, {height: "70%"}]}>
-                        <Text style={[uStyles.header, {color: colors.black, marginTop: 32}]}>{todoOverGoal ? "I will do" : "I will"}</Text>
+                        <Text style={[uStyles.header, {color: colors.black, marginTop: 32}]}>{todoOverGoal ? "I will do" : "I will be able to"}</Text>
                         <TextInput 
                             style={[uStyles.input, {width: "85%", marginTop: 0, alignSelf: "center", backgroundColor: colors.light, color: colors.black, textAlign: "center"}]} 
                             placeholder={todoOverGoal ? "enter a quantity..." : "enter a goal..."}

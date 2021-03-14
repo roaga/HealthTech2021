@@ -1,21 +1,35 @@
-import React, {useState, useCallback, useEffect, useRef, createRef} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, FlatList, Modal, ScrollView} from 'react-native'
 import {StatusBar} from 'expo-status-bar';
 import {Feather} from "@expo/vector-icons";
 import * as Reanimatable from 'react-native-animatable';
 
 import {uStyles, colors} from '../styles.js'
+import {FirebaseContext} from "../context/FirebaseContext"
 import checkIfFirstLaunch from '../scripts/CheckFirstLaunch';
 import SentimentModal from '../components/SentimentModal.js';
 
 export default FeedScreen = () => {
+    const firebase = useContext(FirebaseContext);
     const [upNext, setUpNext] = useState([{id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: "", completed: false}]);
     const [goals, setGoals] = useState([]);
     const [onboardingVisible, setOnboardingVisible] = useState(false);    
     const [sentimentModalVisible, setSentimentModalVisible] = useState(false);
 
     useEffect(() => {
-        //TODO: get posts from backend, setLiked
+        const getTodosGoals = async () => {
+            await firebase.getTodos().then(res => {
+                setUpNext(res);
+            });
+            await firebase.getGoals().then((res) => {
+                console.log("res:")
+                console.log(res)
+                setGoals(res);
+            });
+            let gottenGoals = await firebase.getGoals();
+            console.log(gottenGoals)
+        }
+        getTodosGoals();
 
         const getIsFirstLaunch = async () => {
             const isFirstLaunch = await checkIfFirstLaunch();
@@ -67,7 +81,7 @@ export default FeedScreen = () => {
         return (
             <View style={{flexDirection: "row"}}>
                 <Feather name={item.completed ? "check-circle" : "circle"} color={colors.dark} size={32}/>
-                <Text style={[uStyles.body, {color: colors.black, paddingHorizontal: 16}]}>{"I will " + item.goal + " by " + item.day + "."}</Text>
+                <Text style={[uStyles.body, {color: colors.black, paddingHorizontal: 16}]}>{"I will be able to " + item.goal + " by " + item.day + "."}</Text>
             </View>
         )
     }
@@ -98,7 +112,7 @@ export default FeedScreen = () => {
                     <FlatList
                         data={goals}
                         renderItem={({item, index}) => renderGoal(item, index)}
-                        keyExtractor={(item) => item.id.toString()}
+                        keyExtractor={(item) => item.uid.toString() + item.goal.toString() + item.day.toString()}
                         style={{flex: 1, height: "100%", paddingTop: 12}}
                         contentContainerStyle={{paddingBottom: 12}}
                         showsVerticalScrollIndicator={false}
