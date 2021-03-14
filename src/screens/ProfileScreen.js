@@ -10,6 +10,7 @@ import {ImageUpload} from '../scripts/ImageUpload'
 import OnboardingModal from '../components/OnboardingModal.js';
 import NotificationsModal from '../components/NotificationsModal'
 import SettingsModal from '../components/SettingsModal.js';
+console.disableYellowBox = true;
 
 export default ProfileScreen = () => {
     const [user, setUser] = useContext(UserContext);
