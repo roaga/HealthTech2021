@@ -19,10 +19,15 @@ export default PostScreen = () => {
     const [todo, setTodo] = useState({uid: firebase.getCurrentUser().uid, quantity: "", exercise: "", day: "", time: "", place: "", completed: false, created: Date.now()});
     const [goal, setGoal] = useState({uid: firebase.getCurrentUser().uid, goal: "", day: "", completed: false, created: Date.now()});
     const [todoOverGoal, setTodoOverGoal] = useState(true);
-    const [suggestion, setSuggestion] = useState();
+    const [suggestion, setSuggestion] = useState("");
 
     useEffect(() => {
-        // get suggestion
+        const getSuggestion = async () => {
+            await firebase.getSuggestion().then(res => {
+                setSuggestion(res);
+            });
+        }
+        getSuggestion();
     }, []);
 
     const sendTodo = () => {
@@ -46,6 +51,7 @@ export default PostScreen = () => {
                     <Reanimatable.View animation="slideInUp" duration={500}>
                     <View>
                         <Text style={[uStyles.header, {marginTop: 32}]}>A suggestion...</Text>
+                        <Text style={[uStyles.body, {textAlign: "center", padding: 4}]}>{suggestion}</Text>
                     </View>
                     <View style={[uStyles.postCard, {height: "70%"}]}>
                         <Text style={[uStyles.header, {color: colors.black, marginTop: 32}]}>{todoOverGoal ? "I will do" : "I will be able to"}</Text>

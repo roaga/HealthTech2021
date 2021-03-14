@@ -149,7 +149,7 @@ export default FeedScreen = () => {
             </View> */}
 
             <View style={uStyles.topBar}>
-                <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>Stick to It!</Text>
+                <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>FitFeelsGood</Text>
                 {/* <View style={{flexDirection: "row"}}>
                     <DropDownPicker
                         items={[
