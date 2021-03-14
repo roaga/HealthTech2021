@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, FlatList, Modal} from 'react-native'
+import {Button, View, Text, StyleSheet, TextInput, TouchableOpacity, ImageBackground, ScrollView, FlatList, Modal, Alert, SafeAreaView} from 'react-native'
 import {StatusBar} from 'expo-status-bar';
 import {Feather} from "@expo/vector-icons";
 import * as Reanimatable from 'react-native-animatable';
@@ -58,8 +58,8 @@ export default ExploreScreen = () => {
         {username: "Hane", uid: "238823", pfpUrl: "default", causes: ["Environment"], points: 33},
     ];
 
-    const tempCausesData = [
-        "Environment",
+    var tempCausesData = [
+        "Environmental",
         "Fitness"
     ]
 
@@ -74,13 +74,20 @@ export default ExploreScreen = () => {
                 value={searchText}
                 maxLength={2000}
             />
+            <Button
+                onPress={() => tempCausesData = [searchText]}
+                title="Go"
+                color="#f194ff"
+                accessibilityLabel="Learn more about this purple button"
+            />
 
             <Reanimatable.View animation="slideInUp" duration={500}>
                 <View style={uStyles.searchCard}>
                     <Text style={[uStyles.header, {marginTop: 4, color: colors.black, paddingBottom: 8}]}>Causes</Text>
 
                     <FlatList
-                        data={tempCausesData.filter(str => str.includes(searchText))}
+                    //.filter(str => str.includes(searchText))
+                        data={tempCausesData}
                         renderItem={renderCauseItem}
                         keyExtractor={(item) => item}
                         style={{flex: 1, height: "100%", paddingTop: 32}}
@@ -123,7 +130,7 @@ export default ExploreScreen = () => {
             </Modal>
 
             <View style={uStyles.topBar}>
-                <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>Explore</Text>
+                <Text style={[uStyles.title, {color: colors.primary, textAlign: 'left', marginTop: 32}]}>Plan</Text>
             </View>
 
             <StatusBar style="light" />
