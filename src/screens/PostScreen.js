@@ -10,6 +10,7 @@ import {ImageUpload} from '../scripts/ImageUpload'
 import PostCard from "../components/PostCard"
 import CameraModal from '../components/CameraModal.js';
 import {FirebaseContext} from "../context/FirebaseContext"
+import {TestDB} from '../scripts/TestDB'
 
 export default PostScreen = () => {
     const [todo, setTodo] = useState({id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: "", completed: false});
@@ -17,6 +18,14 @@ export default PostScreen = () => {
     const [todoOverGoal, setTodoOverGoal] = useState(true);
     const firebase = useContext(FirebaseContext);
 
+<<<<<<< Updated upstream
+=======
+    useEffect(() => {
+        AI.analyzeSentiment("I love this awesome freaking intelligent smart workout app");
+        TestDB.postToDB("test");
+    }, []);
+
+>>>>>>> Stashed changes
     const sendTodo = () => {
         // todo: call backend
         setTodo({id: "", uid: "", quantity: "", exercise: "", day: "", time: "", place: ""});
