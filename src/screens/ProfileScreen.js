@@ -58,7 +58,7 @@ export default ProfileScreen = () => {
 
     return (
         <View style={styles.container}>
-            <ScrollView style={{marginTop: 64}}>
+            <View style={{marginTop: 64, marginTop: "50%"}}>
                 <TouchableOpacity style={[uStyles.pfpBubble, {alignSelf: "center"}]} onPress={() => addPostPhoto()}>
                     <ImageBackground 
                         style={uStyles.pfp}
@@ -99,7 +99,7 @@ export default ProfileScreen = () => {
                         maxToRenderPerBatch={1} // Reduce number in each render batch
                     />
                 </View> */}
-            </ScrollView>
+            </View>
 
             <Modal
                 animationType="slide" 
